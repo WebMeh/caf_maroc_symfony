@@ -1,0 +1,12 @@
+{% extends 'admin/admin_base.html.twig' %}
+
+{% block title %}New Team{% endblock %}
+
+{% block content %}
+    <h1 style="border: 2px solid green; text-align: center; width: 40%; margin: auto;"
+    class="p-1 t-2">Nouvelle Equipe</h1>
+
+    {{ include('team/_form.html.twig') }}
+
+    <a href="{{ path('app_team_index') }}">back to list</a>
+{% endblock %}

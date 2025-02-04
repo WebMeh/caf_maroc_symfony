@@ -1,0 +1,31 @@
+{{ form_start(form) }}
+<!-- Nom de l'équipe -->
+<div class="mb-3">
+	<label class="form-label fw-bold">Nom de l'Équipe</label>
+	{{ form_widget(form.name, {'attr': {'class': 'form-control', 'placeholder': 'Ex: MAR'}}) }}
+</div>
+
+<!-- Pays -->
+<div class="mb-3">
+	<label class="form-label fw-bold">Pays</label>
+	{{ form_widget(form.country, {'attr': {'class': 'form-control', 'placeholder': 'Ex: Maroc'}}) }}
+</div>
+
+<!-- Classement Mondial -->
+<div class="mb-3">
+	<label class="form-label fw-bold">Classement Mondial</label>
+	{{ form_widget(form.ranking, {'attr': {'class': 'form-control', 'type': 'number', 'placeholder': 'Ex: 25'}}) }}
+</div>
+
+<hr>
+
+<!-- Bouton de soumission -->
+<div class="text-center mt-4">
+	<button type="submit" class="btn btn-success px-4 py-2">
+		<i class="fas fa-save"></i>
+		{{ team.id ? 'Mettre à jour' : 'Enregistrer' }}
+	</button>
+	<a href="{{ path('admin_teams') }}" class="btn btn-secondary ms-3">Annuler</a>
+</div>
+{# <button class="btn">{{ button_label|default('Save') }}</button> #}
+{{ form_end(form) }}
