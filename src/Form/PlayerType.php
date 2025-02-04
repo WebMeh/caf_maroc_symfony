@@ -17,10 +17,7 @@ class PlayerType extends AbstractType
             ->add('name')
             ->add('position')
             ->add('club')
-            ->add('team', EntityType::class, [
-                'class' => Team::class,
-                'choice_label' => 'id',
-            ])
+           
         ;
     }
 

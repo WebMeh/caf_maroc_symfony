@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Player;
 use App\Form\PlayerType;
 use App\Repository\PlayerRepository;
+use App\Repository\TeamRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,10 +23,17 @@ final class PlayerController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_player_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/new/{teamId}', name: 'admin_player_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager, TeamRepository $teamRepository, int $teamId): Response
     {
+        $team = $teamRepository->find($teamId);
+        if (!$team) {
+            throw $this->createNotFoundException("Équipe non trouvée.");
+        }
+
         $player = new Player();
+        $player->setTeam($team);
+
         $form = $this->createForm(PlayerType::class, $player);
         $form->handleRequest($request);
 
@@ -33,7 +41,7 @@ final class PlayerController extends AbstractController
             $entityManager->persist($player);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_player_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('admin_teams', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('player/new.html.twig', [
@@ -71,7 +79,7 @@ final class PlayerController extends AbstractController
     #[Route('/{id}', name: 'app_player_delete', methods: ['POST'])]
     public function delete(Request $request, Player $player, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$player->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $player->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($player);
             $entityManager->flush();
         }
