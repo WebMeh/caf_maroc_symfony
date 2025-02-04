@@ -83,8 +83,10 @@ final class PlayerController extends AbstractController
     }
 
     #[Route('/{id}', name: 'admin_player_delete', methods: ['POST'])]
-    public function delete(Request $request, Player $player, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, int $id, PlayerRepository $playerRepository, EntityManagerInterface $entityManager): Response
     {
+
+        $player = $playerRepository->find($id);
         if ($this->isCsrfTokenValid('delete' . $player->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($player);
             $entityManager->flush();
