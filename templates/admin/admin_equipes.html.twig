@@ -50,6 +50,36 @@
 
 				</tbody>
 			</table>
+			<!-- Pagination -->
+			<nav>
+				<ul class="pagination justify-content-center">
+					{% if currentPage > 1 %}
+						<li class="page-item">
+							<a class="page-link" href="{{ path('admin_teams', { page: currentPage - 1 }) }}">Précédent</a>
+						</li>
+					{% else %}
+						<li class="page-item disabled">
+							<a class="page-link">Précédent</a>
+						</li>
+					{% endif %}
+
+					{% for i in 1..totalPages %}
+						<li class="page-item {% if i == currentPage %}active{% endif %}">
+							<a class="page-link" href="{{ path('admin_teams', { page: i }) }}">{{ i }}</a>
+						</li>
+					{% endfor %}
+
+					{% if currentPage < totalPages %}
+						<li class="page-item">
+							<a class="page-link" href="{{ path('admin_teams', { page: currentPage + 1 }) }}">Suivant</a>
+						</li>
+					{% else %}
+						<li class="page-item disabled">
+							<a class="page-link">Suivant</a>
+						</li>
+					{% endif %}
+				</ul>
+			</nav>
 		</div>
 	</div>
 {% endblock %}

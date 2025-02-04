@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+
 #[Route('/admin')]
 final class AdminController extends AbstractController
 {
@@ -22,10 +23,27 @@ final class AdminController extends AbstractController
     }
 
     #[Route('/teams', name: 'admin_teams')]
-    public function getTeams(TeamRepository $teamRepository): Response
+    public function getTeams(Request $request, TeamRepository $teamRepository): Response
     {
+        // Récupérer la page courante (par défaut page 1)
+        $page = $request->query->getInt('page', 1);
+        $teamsPerPage = 6; // 6 équipes par page
+
+        // Calculer l'offset (début de la page)
+        $offset = ($page - 1) * $teamsPerPage;
+
+        // Récupérer les équipes avec la pagination
+        $teams = $teamRepository->findBy([], null, $teamsPerPage, $offset);
+
+        // Compter le total des équipes pour la pagination
+        $totalTeams = $teamRepository->count([]);
+
+        // Calculer le nombre total de pages
+        $totalPages = ceil($totalTeams / $teamsPerPage);
         return $this->render('admin/admin_equipes.html.twig', [
-            'teams' => $teamRepository->findAll()
+            'teams' => $teams,
+            'totalPages' => $totalPages,
+            'currentPage' => $page
         ]);
     }
 
@@ -58,5 +76,4 @@ final class AdminController extends AbstractController
             'players' => $players,
         ]);
     }
-
 }
