@@ -1,0 +1,53 @@
+{% extends 'admin/admin_base.html.twig' %}
+
+{% block title %}Liste des joueurs de l'équipe
+	{{ team.name }}
+{% endblock %}
+
+{% block content %}
+	<div class="card">
+
+		<div class="card-header d-flex justify-content-between align-items-center mb-3 bg-dark text-white">
+			<div>
+				⚽ Joueurs de l'équipe nationale
+				<strong>{{team.country}}</strong>
+			</div>
+			<a href="{{path('admin_player_new', {teamId:team.id})}}" class="btn text-white ">➕ Nouveau</a>
+
+
+		</div>
+		<div
+			class="card-body">
+			<!-- Table des joueurs -->
+			<table class="table table-striped">
+				<thead>
+					<tr class="text-center">
+						<th>Nom</th>
+						<th>Club</th>
+						<th>Position</th>
+						<th>Numéro de tenue</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody class="text-center">
+					{% for player in players %}
+						<tr>
+							<td>{{ player.name }}</td>
+							<td>{{ player.club }}</td>
+							<td>{{ player.position }}</td>
+							<td>{{ player.shirtNumber }}</td>
+							<td>
+								<a href="{{ path('admin_player_edit', { id: player.id }) }}" class="btn btn-warning btn-sm">Modifier</a>
+								<a href="{{ path('admin_player_delete', { id: team.id }) }}" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce joueur ?')">Supprimer</a>
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="6" class="text-center">Aucun joueur trouvé</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}

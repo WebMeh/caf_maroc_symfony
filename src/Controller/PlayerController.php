@@ -41,12 +41,15 @@ final class PlayerController extends AbstractController
             $entityManager->persist($player);
             $entityManager->flush();
 
-            return $this->redirectToRoute('admin_teams', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('admin_players_list', [
+                'teamId'=>$teamId
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('player/new.html.twig', [
             'player' => $player,
             'form' => $form,
+            'team' => $team
         ]);
     }
 
@@ -58,7 +61,7 @@ final class PlayerController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_player_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'admin_player_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Player $player, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(PlayerType::class, $player);
@@ -67,16 +70,19 @@ final class PlayerController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_player_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('admin_players_list', [
+                'teamId'=> $player->getTeam()->getId()
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('player/edit.html.twig', [
+            'team' =>$player->getTeam(),
             'player' => $player,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}', name: 'app_player_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'admin_player_delete', methods: ['POST'])]
     public function delete(Request $request, Player $player, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $player->getId(), $request->getPayload()->getString('_token'))) {
@@ -84,6 +90,8 @@ final class PlayerController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_player_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('admin_players_list', [
+            'teamId' => $player->getTeam()->getId()
+        ], Response::HTTP_SEE_OTHER);
     }
 }
