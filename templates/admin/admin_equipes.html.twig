@@ -27,7 +27,7 @@
 					{% for team in teams %}
 						<tr>
 							<td>
-								<a href="{{ path('admin_teams_details', {id: team.id}) }}">{{team.name}}</a>
+								<a href="#">{{team.name}}</a>
 							</td>
 							<td>{{team.country}}</td>
 							{# Joueurs de l'équipe #}
@@ -42,8 +42,8 @@
 
 							<td>{{team.ranking}}</td>
 							<td>
-								<a href="#" class="btn btn-warning btn-sm">✏️ Modifier</a>
-								<a href="#" class="btn btn-danger btn-sm">🗑️ Supprimer</a>
+								<a href="{{path('admin_team_edit', {id: team.id})}}" class="btn btn-warning btn-sm">✏️ Modifier</a>
+								
 							</td>
 						</tr>
 					{% endfor %}

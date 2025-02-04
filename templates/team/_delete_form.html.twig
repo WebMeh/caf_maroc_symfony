@@ -1,4 +1,7 @@
-<form method="post" action="{{ path('app_team_delete', {'id': team.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ team.id) }}">
-    <button class="btn">Delete</button>
+<form method="post" action="{{ path('app_team_delete', {'id': team.id}) }}" onsubmit="return confirm('Tous les joueurs de l'équipes seront?');">
+	<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ team.id) }}">
+	<button class="btn">
+		<i class="fa fa-trash text-danger" aria-hidden="true"></i>
+		<span class="text-white">Supprimer</span>
+	</button>
 </form>

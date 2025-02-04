@@ -1,13 +1,20 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/admin_base.html.twig' %}
 
-{% block title %}Edit Team{% endblock %}
+{% block title %}Modifier Equipe
+{% endblock %}
 
-{% block body %}
-    <h1>Edit Team</h1>
+{% block content %}
+	<div class="card">
+		<div class="card-header d-flex justify-content-between align-items-center mb-3 bg-dark text-white">
+			<div>
+				⚽ Modifier Equipe 
+				<strong>{{team.country}}</strong>
+			</div>
+			{{ include('team/_delete_form.html.twig') }}
 
-    {{ include('team/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_team_index') }}">back to list</a>
-
-    {{ include('team/_delete_form.html.twig') }}
+		</div>
+		<div class="card-body">
+			{{ include('team/_form.html.twig', {'button_label': 'Update'}) }}
+		</div>
+	</div>
 {% endblock %}

@@ -50,7 +50,7 @@ final class TeamController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_team_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'admin_team_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Team $team, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(TeamType::class, $team);
@@ -59,7 +59,7 @@ final class TeamController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_team_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('admin_teams', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('team/edit.html.twig', [
@@ -71,11 +71,17 @@ final class TeamController extends AbstractController
     #[Route('/{id}', name: 'app_team_delete', methods: ['POST'])]
     public function delete(Request $request, Team $team, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$team->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $team->getId(), $request->getPayload()->getString('_token'))) {
+            // Supprimer tous les joueurs de l'équipe
+            $players = $team->getPlayers();
+            foreach ($players as $player) {
+                $entityManager->remove($player);
+            }
+            // Supprimer l'équipe
             $entityManager->remove($team);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_team_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('admin_teams', [], Response::HTTP_SEE_OTHER);
     }
 }

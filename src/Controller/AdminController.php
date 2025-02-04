@@ -48,10 +48,11 @@ final class AdminController extends AbstractController
     }
 
     #[Route('/teams/{id}', name: 'admin_teams_details')]
-    public function getTeamsDetails($id): Response
+    public function getTeamsDetails($id, Team $team): Response
     {
         return $this->render('admin/admin_equipe_details.html.twig', [
             'id' => $id,
+            'team' =>$team
         ]);
     }
 
