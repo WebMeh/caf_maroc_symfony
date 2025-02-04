@@ -17,12 +17,6 @@ class TeamType extends AbstractType
             ->add('name')
             ->add('country')
             ->add('ranking')
-            ->add('players', CollectionType::class, [
-                'entry_type' => PlayerType::class,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'by_reference' => false,
-            ])
         ;
     }
 

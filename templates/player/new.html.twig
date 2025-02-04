@@ -1,11 +1,16 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/admin_base.html.twig' %}
 
-{% block title %}New Player{% endblock %}
+{% block title %}Nouveau Joueur
+{% endblock %}
 
-{% block body %}
-    <h1>Create new Player</h1>
+{% block content %}
+	<div class="card">
+		<div class="card-header bg-dark text-white">
+			⚽ Nouveau joueur
+		</div>
+		<div class="card-body">
+			{{ include('player/_form.html.twig') }}
 
-    {{ include('player/_form.html.twig') }}
-
-    <a href="{{ path('app_player_index') }}">back to list</a>
+		</div>
+	</div>
 {% endblock %}

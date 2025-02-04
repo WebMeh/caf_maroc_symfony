@@ -1,12 +1,16 @@
 {% extends 'admin/admin_base.html.twig' %}
 
-{% block title %}New Team{% endblock %}
+{% block title %}Nouvelle Equipe
+{% endblock %}
 
 {% block content %}
-    <h1 style="border: 2px solid green; text-align: center; width: 40%; margin: auto;"
-    class="p-1 t-2">Nouvelle Equipe</h1>
+	<div class="card">
+		<div class="card-header bg-dark text-white">
+			⚽ Nouvelle équipe
+		</div>
+		<div class="card-body">
+			{{ include('team/_form.html.twig') }}
 
-    {{ include('team/_form.html.twig') }}
-
-    <a href="{{ path('app_team_index') }}">back to list</a>
+		</div>
+	</div>
 {% endblock %}

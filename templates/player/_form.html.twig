@@ -1,4 +1,37 @@
+<div class="alert alert-info text-center">
+	<i class="fas fa-info-circle"></i>
+	Remplissez les informations ci-dessous pour ajouter un joueur à l'équipe
+	<strong>Maroc</strong>.
+</div>
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+<!-- Première ligne : Nom & Club -->
+<div class="row mb-3">
+	<div class="col-md-6">
+		<label class="form-label">Nom du joueur</label>
+		{{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+	</div>
+	<div class="col-md-6">
+		<label class="form-label">Club</label>
+		{{ form_widget(form.club, {'attr': {'class': 'form-control'}}) }}
+	</div>
+</div>
+
+<!-- Deuxième ligne : Position & Numéro de tenue -->
+<div class="row mb-3">
+	<div class="col-md-6">
+		<label class="form-label">Position</label>
+		{{ form_widget(form.position, {'attr': {'class': 'form-select'}}) }}
+	</div>
+	<div class="col-md-6">
+		<label class="form-label">Numéro de tenue</label>
+		{{ form_widget(form.shirtNumber, {'attr': {'class': 'form-control', 'min': 1, 'max': 99}}) }}
+	</div>
+</div>
+
+<div class="text-end mt-4">
+	<button type="submit" class="btn btn-success ">
+		<i class="fas fa-save"></i>
+		Enregistrer</button>
+</div>
 {{ form_end(form) }}
