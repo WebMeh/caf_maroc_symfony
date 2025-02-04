@@ -15,4 +15,20 @@ final class AdminController extends AbstractController
             'controller_name' => 'AdminController',
         ]);
     }
+
+    #[Route('/admin/teams', name: 'admin_teams')]
+    public function getTeams(): Response
+    {
+        return $this->render('admin/admin_equipes.html.twig', [
+            'controller_name' => 'AdminController',
+        ]);
+    }
+
+    #[Route('/admin/teams/{id}', name: 'admin_teams_details')]
+    public function getTeamsDetails($id): Response
+    {
+        return $this->render('admin/admin_equipe_details.html.twig', [
+            'id' => $id,
+        ]);
+    }
 }

@@ -1,12 +1,88 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/admin_base.html.twig' %}
 
-{% block title %}Admin - CAF{% endblock %}
+{% block title %}Détails de l'Équipe | Admin
+{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-<h1>Welcome admin CAF 2025</h1>
-<a href="{{path('app_logout')}}">Logout</a>
+{% block content %}
+
+	<!-- CONTENT -->
+	<!-- DASHBOARD STATS -->
+		<div class="row"> <div class="col-md-3">
+			<div class="card text-white bg-primary mb-3">
+				<div class="card-body">
+					<h5 class="card-title">32 Équipes</h5>
+					<p class="card-text">Nombre total d'équipes inscrites</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="card text-white bg-success mb-3">
+				<div class="card-body">
+					<h5 class="card-title">52 Matchs</h5>
+					<p class="card-text">Nombre total de matchs programmés</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="card text-white bg-warning mb-3">
+				<div class="card-body">
+					<h5 class="card-title">+100k Billets vendus</h5>
+					<p class="card-text">Nombre de billets déjà réservés</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="card text-white bg-danger mb-3">
+				<div class="card-body">
+					<h5 class="card-title">15 Stades</h5>
+					<p class="card-text">Lieux des matchs de la compétition</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- TABLEAU DES PROCHAINS MATCHS -->
+	<div class="card mt-4">
+		<div class="card-header bg-dark text-white">
+			📅 Prochains Matchs
+		</div>
+		<div class="card-body">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Date</th>
+						<th>Équipe 1</th>
+						<th>Équipe 2</th>
+						<th>Stade</th>
+						<th>Heure</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>10 Février 2025</td>
+						<td>Maroc 🇲🇦</td>
+						<td>Sénégal 🇸🇳</td>
+						<td>Stade de Rabat</td>
+						<td>18:00</td>
+					</tr>
+					<tr>
+						<td>11 Février 2025</td>
+						<td>Algérie 🇩🇿</td>
+						<td>Nigeria 🇳🇬</td>
+						<td>Stade de Casablanca</td>
+						<td>20:30</td>
+					</tr>
+					<tr>
+						<td>12 Février 2025</td>
+						<td>Égypte 🇪🇬</td>
+						<td>Cameroun 🇨🇲</td>
+						<td>Stade de Marrakech</td>
+						<td>19:00</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+
 {% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'admin/admin_base.html.twig' %}
+
+{% block title %}Détails de l'Équipe | Admin{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-dark text-white">
+        🇲🇦 Détails de l'Équipe : Maroc
+    </div>
+    <div class="card-body">
+        <h4>🌍 Pays : Maroc</h4>
+        <h5>📊 Classement FIFA : 13</h5>
+        <h5>👥 Nombre de Joueurs : 24</h5>
+        
+        <a href="{{ path('admin_teams') }}" class="btn btn-primary my-3">⬅️ Retour aux Équipes</a>
+
+        <hr>
+
+        <h4>🏅 Liste des Joueurs</h4>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nom</th>
+                    <th>Poste</th>
+                    <th>Club</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Yassine Bounou</td>
+                    <td>Gardien</td>
+                    <td>Al-Hilal</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Achraf Hakimi</td>
+                    <td>Défenseur</td>
+                    <td>PSG</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Hakim Ziyech</td>
+                    <td>Milieu</td>
+                    <td>Galatasaray</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Sofyan Amrabat</td>
+                    <td>Milieu</td>
+                    <td>Manchester United</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Youssef En-Nesyri</td>
+                    <td>Attaquant</td>
+                    <td>Sevilla FC</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
