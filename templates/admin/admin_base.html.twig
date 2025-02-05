@@ -1,72 +1,128 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}Admin | CAF 2025{% endblock %}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-        }
-        .sidebar {
-            height: 100vh;
-            width: 250px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background-color: #343a40;
-            padding-top: 20px;
-        }
-        .sidebar a {
-            padding: 10px 20px;
-            text-decoration: none;
-            font-size: 18px;
-            color: white;
-            display: block;
-        }
-        .sidebar a:hover {
-            background-color: #495057;
-        }
-        .content {
-            margin-left: 260px;
-            padding: 20px;
-        }
-    </style>
-</head>
-<body>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>
+			{% block title %}Admin | CAF 2025
+			{% endblock %}
+		</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- SIDEBAR -->
-<div class="sidebar">
-    <h4 class="text-center text-white">CAF 2025</h4>
-    <a href="{{ path('admin_index') }}">🏠 Tableau de Bord</a>
-    <a href="{{ path('admin_teams') }}">⚽ Équipes</a>
-    <a href="{{ path('admin_index') }}">📅 Matchs</a>
-    <a href="{{ path('admin_index') }}">🎟️ Billets</a>
-    <a href="{{ path('admin_index') }}">📊 Statistiques</a>
-    <a href="{{ path('admin_index') }}">⚙️ Paramètres</a>
-    <a href="{{ path('app_logout') }}" class="text-danger">🚪 Déconnexion</a>
-</div>
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				background-color: #f8f9fa;
+			}
+			.sidebar {
+				height: 100vh;
+				width: 250px;
+				position: fixed;
+				top: 0;
+				left: 0;
+				background-color: #343a40;
+				padding-top: 20px;
+			}
+			.sidebar a {
+				padding: 10px 20px;
+				text-decoration: none;
+				font-size: 18px;
+				color: white;
+				display: block;
+			}
+			.sidebar a:hover {
+				background-color: #495057;
+			}
+			.content {
+				margin-left: 260px;
+				padding: 20px;
+			}
+		</style>
+	</head>
+	<body>
 
-<!-- CONTENT -->
-<div class="content">
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
-        <div class="container-fluid">
-            <span class="navbar-brand">🏆 Admin - CAF 2025</span>
-            <div class="d-flex">
-                <span class="me-3">Bienvenue, Admin</span>
-                <img src="https://via.placeholder.com/40" class="rounded-circle" alt="Admin">
-            </div>
-        </div>
-    </nav>
+		<!-- SIDEBAR -->
+		<div class="sidebar">
+			<h4 class="text-center text-white">CAF 2025</h4>
+			<ul style="list-style-type:none">
+				<li>
+					<a href="{{ path('admin_index') }}">🏠 Tableau de Bord</a>
+				</li>
+				<li>
+					<a class="nav-link collapsed" data-bs-toggle="collapse" href="#teamsMenu" aria-expanded="false">
+						⚽ Équipes
+					</a>
+					<div id="teamsMenu" class="collapse">
+						<ul class="nav flex-column ms-3">
+							<li class="nav-item">
+								<a class="nav-link" href="{{path('admin_teams')}}">
+									<i class="fa-brands fa-microsoft"></i>
+									Les équipes
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{path('admin_team_new')}}">
+									<i class="fa-solid fa-plus"></i>
+									Nouvelle équipe
+								</a>
+							</li>
+						</ul>
+					</div>
+				</li>
+			</li>
+			<li>
+				<a class="nav-link collapsed" data-bs-toggle="collapse" href="#matchesMenu" aria-expanded="false">
+					📅Matches
+				</a>
+				<div id="matchesMenu" class="collapse">
+					<ul class="nav flex-column ms-3">
+						<li class="nav-item">
+							<a class="nav-link" href="{{path('admin_matches_list')}}">
+								<i class="fas fa-calendar-alt"></i>
+								Calendrier</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">
+								<i class="fas fa-plus"></i>
+								Ajouter un match</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">
+								<i class="fas fa-trophy"></i>
+								Gérer les scores</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">
+								<i class="fas fa-chart-bar"></i>
+								Classements</a>
+						</li>
+					</ul>
+				</div>
+			</li>
+			<li>
+				<a href="{{ path('admin_index') }}">🎟️ Billets</a>
+			</li>
+			<li>
+				<a href="{{ path('admin_index') }}">📊 Statistiques</a>
+			</li>
+			<li>
+				<a href="{{ path('app_logout') }}" class="text-danger">🚪 Déconnexion</a>
+			</li>
 
-    {% block content %}{% endblock %}
-</div>
+		</ul>
+	</body>
+</html></div><!-- CONTENT --><div class="content">
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
+	<div class="container-fluid">
+		<span class="navbar-brand">🏆 Admin - CAF 2025</span>
+		<div class="d-flex">
+			<span class="me-3">Bienvenue, Admin</span>
+			<img src="https://via.placeholder.com/40" class="rounded-circle" alt="Admin">
+		</div>
+	</div>
+</nav>
 
-</body>
-</html>
+{% block content %}{% endblock %}</div></body></html>

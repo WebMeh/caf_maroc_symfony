@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Team;
 use App\Form\TeamType;
+use App\Repository\MatcheRepository;
 use App\Repository\PlayerRepository;
 use App\Repository\TeamRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -75,6 +76,16 @@ final class AdminController extends AbstractController
         return $this->render('admin/admin_players_list.html.twig', [
             'team' => $team,
             'players' => $players,
+        ]);
+    }
+
+    #[Route('/matches', name: 'admin_matches_list')]
+    public function list(MatcheRepository $matcheRepository)
+    {
+        $matches = $matcheRepository->findBy([], ['date' => 'ASC']);
+
+        return $this->render('admin/matches.html.twig', [
+            'matches' => $matches,
         ]);
     }
 }

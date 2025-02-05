@@ -1,0 +1,55 @@
+{{ form_start(form) }}
+
+<div
+	class="row mb-3 align-items-center">
+	<!-- Équipe 1 -->
+	<div class="col-md-4">
+		<label class="form-label">Équipe 1</label>
+		<div class="input-group">
+			{{ form_widget(form.team1, {'attr': {'class': 'form-control'}}) }}
+			<span class="input-group-text">🏆</span>
+			{{ form_widget(form.score1, {'attr': {'class': 'form-control text-center', 'style': 'max-width: 60px;'}}) }}
+		</div>
+	</div>
+
+	<!-- VS au centre -->
+	<div class="col-md-4 text-center">
+		<span class="fs-4 fw-bold text-danger">CAN-2025</span>
+	</div>
+
+	<!-- Équipe 2 -->
+	<div class="col-md-4">
+		<label class="form-label">Équipe 2</label>
+		<div class="input-group">
+			{{ form_widget(form.score2, {'attr': {'class': 'form-control text-center', 'style': 'max-width: 60px;'}}) }}
+			<span class="input-group-text">🏆</span>
+			{{ form_widget(form.team2, {'attr': {'class': 'form-control'}}) }}
+		</div>
+	</div>
+</div>
+
+
+<!-- Deuxième ligne : Stade  & Date et l'heure du matche & Phase du tournoi -->
+<div class="row mb-3 align-items-center">
+	<div class="col-md-4">
+		<label class="form-label">Date et heure du matche</label>
+		{{ form_widget(form.date, {'attr': {'class': 'form-control'}}) }}
+	</div>
+
+	<div class="col-md-4">
+		<label class="form-label">Phase de tournoi</label>
+		{{ form_widget(form.phase, {'attr': {'class': 'form-control'}}) }}
+	</div>
+
+	<div class="col-md-4">
+		<label class="form-label">Stade</label>
+		{{ form_widget(form.stadium, {'attr': {'class': 'form-control'}}) }}
+	</div>
+</div>
+
+<div class="text-end mt-4">
+	<button type="submit" class="btn btn-success ">
+		<i class="fas fa-save"></i>
+		Enregistrer</button>
+</div>
+{{ form_end(form) }}

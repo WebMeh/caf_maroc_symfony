@@ -1,0 +1,15 @@
+{% extends 'admin/admin_base.html.twig' %}
+
+{% block title %}Nouveau Matche
+{% endblock %}
+
+{% block content %}
+	<div class="card">
+		<div class="card-header bg-dark text-white">
+			📅 Nouveau matche
+		</div>
+		<div class="card-body">
+			{{ include('matche/_form.html.twig') }}
+		</div>
+	</div>
+{% endblock %}
