@@ -24,6 +24,28 @@ class Team
     #[ORM\Column]
     private ?int $ranking = null;
 
+    #[ORM\Column(type: 'integer')]
+    private int $points = 0;
+
+    #[ORM\Column(type: 'integer')]
+    private int $matchesPlayed = 0;
+
+    #[ORM\Column(type: 'integer')]
+    private int $wins = 0;
+
+    #[ORM\Column(type: 'integer')]
+    private int $draws = 0;
+
+    #[ORM\Column(type: 'integer')]
+    private int $losses = 0;
+
+    #[ORM\Column(type: 'integer')]
+    private int $goalsFor = 0;
+
+    #[ORM\Column(type: 'integer')]
+    private int $goalsAgainst = 0;
+
+
     /**
      * @var Collection<int, Player>
      */
@@ -36,6 +58,9 @@ class Team
     #[ORM\OneToMany(targetEntity: Matche::class, mappedBy: 'team1')]
     private Collection $matches;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $goalDifference = null;
+
     public function __construct()
     {
         $this->players = new ArrayCollection();
@@ -45,6 +70,41 @@ class Team
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getPoints(): ?int
+    {
+        return $this->points;
+    }
+
+    public function getMatchesPlayed(): ?int
+    {
+        return $this->matchesPlayed;
+    }
+
+    public function getWins(): ?int
+    {
+        return $this->wins;
+    }
+
+    public function getDraws(): ?int
+    {
+        return $this->draws;
+    }
+
+    public function getLosses(): ?int
+    {
+        return $this->losses;
+    }
+
+    public function getGoalsFor(): ?int
+    {
+        return $this->goalsFor;
+    }
+
+    public function getGoalsAgainst(): ?int
+    {
+        return $this->goalsAgainst;
     }
 
     public function getName(): ?string
@@ -83,6 +143,28 @@ class Team
         return $this;
     }
 
+    public function setPoints(int $points): static
+    {
+        $this->points = $points;
+
+        return $this;
+    }
+
+    public function setGoalsFor(int $goalsFor): static
+    {
+        $this->goalsFor = $goalsFor;
+
+        return $this;
+    }
+
+    public function setGoalsAgainst(int $goalsAgainst): static
+    {
+        $this->goalsAgainst = $goalsAgainst;
+
+        return $this;
+    }
+
+
     /**
      * @return Collection<int, Player>
      */
@@ -116,12 +198,12 @@ class Team
     /**
      * @return Collection<int, Matche>
      */
-    public function getTeam2(): Collection
+    public function getMatches(): Collection
     {
-        return $this->team2;
+        return $this->matches;
     }
 
-    public function addTeam2(Matche $team2): static
+    public function addMatche(Matche $team2): static
     {
         if (!$this->matches->contains($team2)) {
             $this->matches->add($team2);
@@ -131,7 +213,7 @@ class Team
         return $this;
     }
 
-    public function removeTeam2(Matche $team2): static
+    public function removeMatche(Matche $team2): static
     {
         if ($this->matches->removeElement($team2)) {
             // set the owning side to null (unless already changed)
@@ -139,6 +221,18 @@ class Team
                 $team2->setTeam1(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getGoalDifference(): ?int
+    {
+        return $this->goalDifference;
+    }
+
+    public function setGoalDifference(?int $goalDifference): static
+    {
+        $this->goalDifference = $goalDifference;
 
         return $this;
     }

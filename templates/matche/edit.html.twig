@@ -1,13 +1,22 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/admin_base.html.twig' %}
 
-{% block title %}Edit Matche{% endblock %}
+{% block title %}Edit Matche
+{% endblock %}
 
-{% block body %}
-    <h1>Edit Matche</h1>
+{% block content %}
+	<div class="card">
+		<div class="card-header d-flex justify-content-between align-items-center mb-3 bg-dark text-white">
+			<div>
+				⚽ Mettre à jours le matche
+			</div>
+			<a class="button">
+				{{ include('matche/_delete_form.html.twig') }}
+			</a>
+		</div>
+		<div class="card-body">
+			{{ include('matche/_form.html.twig', {'button_label': 'Update'}) }}
+		</div>
+	</div>
 
-    {{ include('matche/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_matche_index') }}">back to list</a>
-
-    {{ include('matche/_delete_form.html.twig') }}
+	{# {{ include('matche/_delete_form.html.twig') }} #}
 {% endblock %}

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MatcheRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -36,6 +38,17 @@ class Matche
 
     #[ORM\Column(length: 255)]
     private ?string $phase = null;
+
+    /**
+     * @var Collection<int, Billet>
+     */
+    #[ORM\OneToMany(targetEntity: Billet::class, mappedBy: 'matche')]
+    private Collection $billets;
+
+    public function __construct()
+    {
+        $this->billets = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -122,6 +135,36 @@ class Matche
     public function setPhase(string $phase): static
     {
         $this->phase = $phase;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Billet>
+     */
+    public function getBillets(): Collection
+    {
+        return $this->billets;
+    }
+
+    public function addBillet(Billet $billet): static
+    {
+        if (!$this->billets->contains($billet)) {
+            $this->billets->add($billet);
+            $billet->setMatche($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBillet(Billet $billet): static
+    {
+        if ($this->billets->removeElement($billet)) {
+            // set the owning side to null (unless already changed)
+            if ($billet->getMatche() === $this) {
+                $billet->setMatche(null);
+            }
+        }
 
         return $this;
     }

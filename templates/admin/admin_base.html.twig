@@ -85,17 +85,13 @@
 								Calendrier</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#">
+							<a class="nav-link" href="{{path('admin_match_new')}}">
 								<i class="fas fa-plus"></i>
 								Ajouter un match</a>
 						</li>
+
 						<li class="nav-item">
-							<a class="nav-link" href="#">
-								<i class="fas fa-trophy"></i>
-								Gérer les scores</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">
+							<a class="nav-link" href="{{path('admin_classement')}}">
 								<i class="fas fa-chart-bar"></i>
 								Classements</a>
 						</li>
@@ -103,7 +99,25 @@
 				</div>
 			</li>
 			<li>
-				<a href="{{ path('admin_index') }}">🎟️ Billets</a>
+				<a class="nav-link collapsed" data-bs-toggle="collapse" href="#billetMenu" aria-expanded="false">
+					🎟️ Billets
+				</a>
+				<div id="billetMenu" class="collapse">
+					<ul class="nav flex-column ms-3">
+						<li class="nav-item">
+							<a class="nav-link" href="{{path('admin_billet_new')}}">
+								<i class="fas fa-plus"></i>
+								Créer une billet</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" href="{{path('admin_classement')}}">
+								<i class="fa fa-eye"></i>
+								Voir les billets</a>
+						</li>
+					</ul>
+				</div>
+
 			</li>
 			<li>
 				<a href="{{ path('admin_index') }}">📊 Statistiques</a>

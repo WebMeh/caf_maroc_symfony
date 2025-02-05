@@ -59,11 +59,11 @@ final class MatcheController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_matche_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('admin_matches_list', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('matche/edit.html.twig', [
-            'matche' => $matche,
+            'match' => $matche,
             'form' => $form,
         ]);
     }

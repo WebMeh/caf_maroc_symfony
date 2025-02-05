@@ -1,0 +1,52 @@
+{% extends 'admin/admin_base.html.twig' %}
+
+{% block title %}
+	Classement CAN 2025
+{% endblock %}
+
+{% block content %}
+<div class="card">
+
+	<div class="card-header ">
+		<div>
+			🏆Classement CAN 2025
+		</div>
+	</div>
+	<div class="card-body">
+			<table class="table table-striped text-center">
+				<thead class="table-dark">
+					<tr>
+						<th>Position</th>
+						<th>Équipe</th>
+						<th>Pts</th>
+						<th>J</th>
+						<th>V</th>
+						<th>N</th>
+						<th>D</th>
+						<th>BP</th>
+						<th>BC</th>
+						<th>Diff</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for team in teams %}
+						<tr>
+							<td>{{ loop.index }}</td>
+							<td>{{ team.name }}</td>
+							<td>
+								<strong>{{ team.points }}</strong>
+							</td>
+							<td>{{ team.matchesPlayed }}</td>
+							<td>{{ team.wins }}</td>
+							<td>{{ team.draws }}</td>
+							<td>{{ team.losses }}</td>
+							<td>{{ team.goalsFor }}</td>
+							<td>{{ team.goalsAgainst }}</td>
+							<td>{{ team.goalsFor - team.goalsAgainst }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}

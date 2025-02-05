@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Billet{% endblock %}
+
+{% block body %}
+    <h1>Billet</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ billet.id }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ billet.prix }}</td>
+            </tr>
+            <tr>
+                <th>PlacesDisponibles</th>
+                <td>{{ billet.placesDisponibles }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_billet_index') }}">back to list</a>
+
+    <a href="{{ path('app_billet_edit', {'id': billet.id}) }}">edit</a>
+
+    {{ include('billet/_delete_form.html.twig') }}
+{% endblock %}

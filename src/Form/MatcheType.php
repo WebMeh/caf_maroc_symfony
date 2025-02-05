@@ -43,6 +43,7 @@ class MatcheType extends AbstractType
             'label' => 'Phase du tournoi',
             'choices' => [
                 'Phase de groupes' => 'Groupes',
+                'Huitiemes de finale' => 'Huits',
                 'Quarts de finale' => 'Quarts',
                 'Demi-finales' => 'Demi',
                 'Finale' => 'Finale',
