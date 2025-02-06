@@ -1,0 +1,18 @@
+
+		<h2>Réserver une place pour le match
+			kda kda
+		</h2>
+
+		<p>Prix du billet :
+			{{ matche.getPrixBillet() }} DH
+			
+		</p>
+
+		{% if app.user %}
+			<form action="{{ path('billet_reserver', { 'id': matche.id }) }}" method="post">
+				<button type="submit" class="btn btn-primary">Réserver une place</button>
+			</form>
+		{% else %}
+			<p>Vous devez être connecté pour réserver un billet.</p>
+		{% endif %}
+	

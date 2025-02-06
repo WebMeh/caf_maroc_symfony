@@ -1,0 +1,16 @@
+{% extends 'admin/admin_base.html.twig' %}
+
+{% block title %}Nouveau Stade
+{% endblock %}
+
+{% block content %}
+	<div class="card">
+		<div class="card-header bg-dark text-white">
+			<i class="fa-solid fa-landmark"></i>
+			Ajouter un stade
+		</div>
+		<div class="card-body">
+			{{ include('stade/_form.html.twig') }}
+		</div>
+	</div>
+{% endblock %}

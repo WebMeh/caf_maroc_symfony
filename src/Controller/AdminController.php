@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Team;
 use App\Form\TeamType;
+use App\Repository\BilletRepository;
 use App\Repository\MatcheRepository;
 use App\Repository\PlayerRepository;
 use App\Repository\TeamRepository;
+use DeepCopy\Matcher\Matcher;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,10 +18,15 @@ use Symfony\Component\Routing\Attribute\Route;
 final class AdminController extends AbstractController
 {
     #[Route('/', name: 'admin_index')]
-    public function index(TeamRepository $teamRepository): Response
-    {
+    public function index(
+        TeamRepository $teamRepository,
+        MatcheRepository $matcheRepository,
+        BilletRepository $billetRepository
+    ): Response {
         return $this->render('admin/index.html.twig', [
             'teams' => $teamRepository->findAll(),
+            'matches' => $matcheRepository->findAll(),
+            'billets' => $billetRepository->countBilletsVendus()
         ]);
     }
 

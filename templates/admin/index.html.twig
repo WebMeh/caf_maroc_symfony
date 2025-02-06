@@ -1,6 +1,6 @@
 {% extends 'admin/admin_base.html.twig' %}
 
-{% block title %}Détails de l'Équipe | Admin
+{% block title %}CAN 2025 | Admin
 {% endblock %}
 
 {% block content %}
@@ -18,7 +18,7 @@
 		<div class="col-md-3">
 			<div class="card text-white bg-success mb-3">
 				<div class="card-body">
-					<h5 class="card-title">52 Matchs</h5>
+					<h5 class="card-title">{{ matches|length }} Matchs</h5>
 					<p class="card-text">Nombre total de matchs programmés</p>
 				</div>
 			</div>
@@ -26,8 +26,8 @@
 		<div class="col-md-3">
 			<div class="card text-white bg-warning mb-3">
 				<div class="card-body">
-					<h5 class="card-title">+100k Billets vendus</h5>
-					<p class="card-text">Nombre de billets déjà réservés</p>
+					<h5 class="card-title">+ <strong>{{ billets }}</strong> Billets vendus dès le début 
+					de la compétition</h5>
 				</div>
 			</div>
 		</div>

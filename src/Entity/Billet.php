@@ -13,15 +13,21 @@ class Billet
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'prix')]
+    #[ORM\ManyToOne(inversedBy: 'billets')]
     private ?Matche $matche = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\ManyToOne(inversedBy: 'billets')]
+    private ?User $acheteur = null;
+
+    #[ORM\Column]
+    private ?bool $valide = null;
+
+    #[ORM\Column]
     private ?float $prix = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $placesDisponibles = null;
-
+    #[ORM\Column(length: 20)]
+    private ?string $statut = 'en_attente'; // Valeurs possibles : 'en_attente', 'approuvé', 'refusé'
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -39,26 +45,50 @@ class Billet
         return $this;
     }
 
+    public function getAcheteur(): ?User
+    {
+        return $this->acheteur;
+    }
+
+    public function setAcheteur(?User $acheteur): static
+    {
+        $this->acheteur = $acheteur;
+
+        return $this;
+    }
+
+    public function isValide(): ?bool
+    {
+        return $this->valide;
+    }
+
+    public function setValide(bool $valide): static
+    {
+        $this->valide = $valide;
+
+        return $this;
+    }
+
     public function getPrix(): ?float
     {
         return $this->prix;
     }
 
-    public function setPrix(?float $prix): static
+    public function setPrix(float $prix): static
     {
         $this->prix = $prix;
 
         return $this;
     }
 
-    public function getPlacesDisponibles(): ?int
+    public function getStatut(): ?string
     {
-        return $this->placesDisponibles;
+        return $this->statut;
     }
 
-    public function setPlacesDisponibles(?int $placesDisponibles): static
+    public function setStatut(string $statut): static
     {
-        $this->placesDisponibles = $placesDisponibles;
+        $this->statut = $statut;
 
         return $this;
     }

@@ -31,19 +31,26 @@
 
 <!-- Deuxième ligne : Stade  & Date et l'heure du matche & Phase du tournoi -->
 <div class="row mb-3 align-items-center">
-	<div class="col-md-4">
+	<div class="col-md-6">
 		<label class="form-label">Date et heure du matche</label>
 		{{ form_widget(form.date, {'attr': {'class': 'form-control'}}) }}
 	</div>
 
-	<div class="col-md-4">
+	<div class="col-md-6">
 		<label class="form-label">Phase de tournoi</label>
 		{{ form_widget(form.phase, {'attr': {'class': 'form-control'}}) }}
 	</div>
+</div>
 
-	<div class="col-md-4">
+<div class="row mb-3 align-items-center">
+	<div class="col-md-6">
 		<label class="form-label">Stade</label>
-		{{ form_widget(form.stadium, {'attr': {'class': 'form-control'}}) }}
+		{{ form_widget(form.stade, {'attr': {'class': 'form-select'}}) }}
+	</div>
+
+	<div class="col-md-6">
+		<label class="form-label">Prix du billet</label>
+		{{ form_widget(form.prixBillet, {'attr': {'class': 'form-control'}}) }}
 	</div>
 </div>
 

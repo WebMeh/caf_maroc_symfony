@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Matche;
+use App\Entity\Stade;
 use App\Entity\Team;
+use Doctrine\DBAL\Types\FloatType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -35,9 +37,10 @@ class MatcheType extends AbstractType
             'widget' => 'single_text',
             'attr' => ['class' => 'form-control']
         ])
-        ->add('stadium', TextType::class, [
-            'label' => 'Stade',
-            'attr' => ['class' => 'form-control']
+        ->add('stade', EntityType::class, [
+            'class' => Stade::class,
+            'choice_label' => 'nom', // Affiche le nom des stades
+            'attr' => ['class' => 'form-select'],
         ])
         ->add('phase', ChoiceType::class, [
             'label' => 'Phase du tournoi',
@@ -61,7 +64,8 @@ class MatcheType extends AbstractType
             'required' => false,
             'attr' => ['class' => 'form-control', 'min' => 0], 
             'data' => 0, // Valeur par défaut
-        ]); 
+        ])
+        ->add('prixBillet'); 
     }
 
     public function configureOptions(OptionsResolver $resolver): void

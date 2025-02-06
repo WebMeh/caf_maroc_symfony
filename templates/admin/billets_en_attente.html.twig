@@ -1,0 +1,55 @@
+{% extends 'admin/admin_base.html.twig' %}
+
+{% block title %}
+	Billets
+{% endblock %}
+
+{% block content %}
+	<div class="card">
+		<div class="card-header bg-dark text-white">
+			<i class="fa-solid fa-hourglass-start"></i>
+			Billets en attents
+		</div>
+		<div class="card-body">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Match</th>
+						<th>Acheteur</th>
+						<th>Prix</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for billet in billets %}
+						<tr>
+							<td>
+								<strong>
+									{{ billet.matche.team1.name }}
+									vs
+									{{ billet.matche.team2.name }}
+								</strong><br>
+								<small>{{ billet.matche.date|date('d/m/Y H:i') }}</small>
+							</td>
+							<td>{{ billet.acheteur.nom  }}
+								{{ billet.acheteur.prenom  }}</td>
+							<td>{{ billet.prix }}
+								DH</td>
+							<td>
+								<a href="{{ path('admin_billet_approuver', { 'id': billet.id }) }}" class="btn btn-success btn-sm">✅ Approuver</a>
+								<a href="{{ path('admin_billet_refuser', { 'id': billet.id }) }}" class="btn btn-danger btn-sm">❌ Refuser</a>
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="4" class="text-center">
+								<div class="alert alert-danger ">Aucun billet en attente</div>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+{% endblock %}

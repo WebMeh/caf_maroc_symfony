@@ -33,7 +33,7 @@ class Matche
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable:true)]
     private ?string $stadium = null;
 
     #[ORM\Column(length: 255)]
@@ -44,6 +44,14 @@ class Matche
      */
     #[ORM\OneToMany(targetEntity: Billet::class, mappedBy: 'matche')]
     private Collection $billets;
+
+    #[ORM\Column]
+    private ?float $prixBillet = null;
+
+    #[ORM\ManyToOne(inversedBy: 'matches')]
+    private ?Stade $stade = null;
+
+
 
     public function __construct()
     {
@@ -168,4 +176,31 @@ class Matche
 
         return $this;
     }
+
+    public function getPrixBillet(): ?float
+    {
+        return $this->prixBillet;
+    }
+
+    public function setPrixBillet(float $prixBillet): static
+    {
+        $this->prixBillet = $prixBillet;
+
+        return $this;
+    }
+
+    public function getStade(): ?Stade
+    {
+        return $this->stade;
+    }
+
+    public function setStade(?Stade $stade): static
+    {
+        $this->stade = $stade;
+
+        return $this;
+    }
+
+   
+
 }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -33,6 +35,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    /**
+     * @var Collection<int, Billet>
+     */
+    #[ORM\OneToMany(targetEntity: Billet::class, mappedBy: 'acheteur')]
+    private Collection $billets;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $nom = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $prenom = null;
+
+    
+
+    public function __construct()
+    {
+        $this->billets = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -108,4 +129,59 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
+    /**
+     * @return Collection<int, Billet>
+     */
+    public function getBillets(): Collection
+    {
+        return $this->billets;
+    }
+
+    public function addBillet(Billet $billet): static
+    {
+        if (!$this->billets->contains($billet)) {
+            $this->billets->add($billet);
+            $billet->setAcheteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBillet(Billet $billet): static
+    {
+        if ($this->billets->removeElement($billet)) {
+            // set the owning side to null (unless already changed)
+            if ($billet->getAcheteur() === $this) {
+                $billet->setAcheteur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(?string $nom): static
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(?string $prenom): static
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
 }

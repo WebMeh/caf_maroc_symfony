@@ -1,15 +1,11 @@
-{% extends 'admin/admin_base.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block title %}Nouvelle Billet
-{% endblock %}
+{% block title %}New Billet{% endblock %}
 
-{% block content %}
-	<div class="card">
-		<div class="card-header bg-dark text-white">
-			🎟️ Nouvelle billet
-		</div>
-		<div class="card-body">
-			{{ include('billet/_form.html.twig') }}
-		</div>
-	</div>
+{% block body %}
+    <h1>Create new Billet</h1>
+
+    {{ include('billet/_form.html.twig') }}
+
+    <a href="{{ path('app_billet_index') }}">back to list</a>
 {% endblock %}

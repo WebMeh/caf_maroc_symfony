@@ -9,8 +9,8 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Valide</th>
                 <th>Prix</th>
-                <th>PlacesDisponibles</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -18,11 +18,11 @@
         {% for billet in billets %}
             <tr>
                 <td>{{ billet.id }}</td>
+                <td>{{ billet.valide ? 'Yes' : 'No' }}</td>
                 <td>{{ billet.prix }}</td>
-                <td>{{ billet.placesDisponibles }}</td>
                 <td>
-                    <a href="{{ path('admin_billet_show', {'id': billet.id}) }}">show</a>
-                    <a href="{{ path('admin_billet_edit', {'id': billet.id}) }}">edit</a>
+                    <a href="{{ path('app_billet_show', {'id': billet.id}) }}">show</a>
+                    <a href="{{ path('app_billet_edit', {'id': billet.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -33,5 +33,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('admin_billet_new') }}">Create new</a>
+    <a href="{{ path('app_billet_new') }}">Create new</a>
 {% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'admin/admin_base.html.twig' %}
+
+{% block title %}
+	Billets
+{% endblock %}
+
+{% block content %}
+	<div class="card">
+		<div class="card-header bg-dark text-white">
+			<i class="fa-solid fa-cart-shopping"></i>
+			Billets vendus
+		</div>
+		<div class="card-body">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Match</th>
+						<th class="text-center">Stade</th>
+						<th class="text-center">Billets vendus</th>
+						<th class="text-center">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for match in billetsParMatch %}
+						<tr>
+							<td>
+								<strong>{{ match.team1_name }}
+									vs
+									{{ match.team2_name }}</strong><br>
+								<small>{{ match.date|date('d/m/Y H:i') }}</small>
+							</td>
+							<td class="text-center">
+								<span class="">{{ match.stad }}</span>
+							</td>
+							<td class="text-center">
+								<span class="badge bg-success">{{ match.billets_vendus }}</span>
+							</td>
+							<td class="text-center">
+								<a href="#" class="btn btn-primary btn-sm">
+									🏷️ Voir les acheteurs
+								</a>
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="3" class="text-center">Aucun billet vendu</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}

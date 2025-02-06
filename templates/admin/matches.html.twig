@@ -36,7 +36,16 @@
 							</td>
 							<td>{{ match.team2.name }}</td>
 							<td>{{ match.date|date('d/m/Y H:i') }}</td>
-							<td>{{ match.stadium }}</td>
+							<td>
+								{% if match.stade is not null %}
+									🏟️
+									{{ match.stade.nom }}
+									({{ match.stade.ville }})
+								{% else %}
+									❌
+									<span class="text-danger">Aucun stade</span>
+								{% endif %}
+							</td>
 							<td>
 								<span class="badge {% if match.phase == 'Finale' %}bg-danger{% elseif match.phase == 'Demi' %}bg-warning{% elseif match.phase == 'Quarts' %}bg-info{% else %}bg-secondary{% endif %}">
 									{{ match.phase }}

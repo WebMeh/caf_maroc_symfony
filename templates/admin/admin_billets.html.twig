@@ -1,0 +1,45 @@
+{% extends 'admin/admin_base.html.twig' %}
+
+{% block title %}
+	Billets
+{% endblock %}
+
+{% block content %}
+	<div>
+
+		<h2>Billets en attente de validation</h2>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Match</th>
+					<th>Acheteur</th>
+					<th>Prix</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for billet in billets %}
+					<tr>
+						<td>
+							<strong>
+								{{ billet.matche.team1.name }}
+								vs
+								{{ billet.matche.team2.name }}
+							</strong><br>
+							<small>{{ billet.matche.date|date('d/m/Y H:i') }}</small>
+						</td>
+						<td>{{ billet.acheteur.nom  }} {{ billet.acheteur.prenom  }}</td>
+						<td>{{ billet.prix }}
+							DH</td>
+						<td>
+							<a href="#" class="btn btn-success btn-sm">Valider</a>
+							<a href="#" class="btn btn-danger btn-sm">Refuser</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+	</div>
+{% endblock %}
