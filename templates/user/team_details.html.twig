@@ -1,0 +1,199 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ equipe.name }}
+	- CAF 2025
+{% endblock %}
+
+{% block stylesheets %}
+
+	<style>
+		.nav-tabs .nav-link-team {
+			font-size: 1.1rem;
+			font-weight: bold;
+		}
+
+		.nav-tabs .nav-link-team.active {
+			background: linear-gradient(90deg, #ff6f00, #ffa000);
+			color: #fff;
+			border: none;
+		}
+
+		.tab-content {
+			padding: 20px;
+			background-color: #f9f9f9;
+			border: 1px solid #ddd;
+			border-top: none;
+			border-radius: 0 0 8px 8px;
+		}
+	</style>
+{% endblock %}
+
+{% block javascipts %}{% endblock %}
+
+{% block body %}
+	<div
+		class="container my-5">
+		<!-- Section d'informations principales -->
+		<div class="equipe-header d-flex align-items-center p-3 mb-4" style="max-height: 400px; border: 1px solid #ddd; border-radius: 10px;">
+			<img src="{{ asset('uploads/logos/' ~ equipe.logo) }}" alt="{{ equipe.name }}" class="team-logo me-4" style="width: 200px; height: 200px; object-fit: contain;">
+			<div>
+				<h2 class="fw-bold " style="color: #006239">{{ equipe.country }}</h2>
+				<p class="text-muted mb-2">
+					<b>Classement  FIFA:</b>
+					{{equipe.ranking}}
+					Mondial</p>
+				<div class="social-icons my-4">
+					<a href="" target="_blank" class="me-3 ">
+						<i class="fab fa-facebook fa-lg text-primary"></i>
+					</a>
+					<a href="" target="_blank" class="me-3">
+						<i class="fab fa-twitter fa-lg text-info"></i>
+					</a>
+					<a href="" target="_blank">
+						<i class="fab fa-instagram fa-lg text-danger"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+
+
+		<div>
+			<h2 class="fw-bold  my-4">
+				<span class="badge  fs-4 px-3 py-2" style="background-color: #006239">
+					<img src="{{ asset('images/caf-logo.png') }}" alt="CAF 2025" style="height: 50px;">
+					Les joueurs de l'équipe nationale
+					<b>{{equipe.country}}</b>
+				</span>
+				<img src="{{ asset('uploads/logos/'~ equipe.logo) }}" class="mx-1" alt="CAN 2025" style="width: 60px; height: 60px;">
+
+			</h2>
+
+			<!-- La phase des gardiens -->
+			<h4 class="mt-4 mx-4 " style="color : #006239">GARDIEN DE BUT</h4>
+
+			<div class="d-flex flex-wrap justify-content-start">
+				{% for gardien in gardiens %}
+					<!-- Card du gardien -->
+					<div class="card m-2 p-2" style="width: 18rem;">
+						<div
+							class="d-flex align-items-center">
+							<!-- Partie gauche : icône de profil et numéro -->
+							<div class="d-flex align-items-center" style="flex: 1;">
+								<i class="fas fa-user-circle fa-2x text-secondary me-2"></i>
+								<span class="fw-bold">{{gardien.shirtNumber}}</span>
+							</div>
+							<!-- Partie centrale : nom du joueur -->
+							<div class="text-center" style="flex: 2;">
+								<h6 class="mb-0">{{gardien.name}}</h6>
+							</div>
+							<!-- Partie droite : drapeau du pays -->
+							<div class="text-end" style="flex: 1;">
+								<img src="{{ asset('uploads/logos/' ~ gardien.team.logo) }}" alt="CAN 2025" style="width: 24px; height: 24px;">
+							</div>
+						</div>
+					</div>
+
+
+				{% else %}
+					<div class="alert alert-danger w-100 text-center">
+						Pas de gardiens!</div>
+				{% endfor %}
+			</div>
+
+			<!-- La phase des défenseurs -->
+
+			<h4 class="mt-4 mx-4 " style="color : #006239">DEFENSEURS</h4>
+			<div class="d-flex flex-wrap justify-content-start">
+
+				{% for deffenseur in defenseurs %}
+					<!-- Card du déffenseur -->
+					<div class="card m-2 p-2" style="width: 18rem;">
+						<div
+							class="d-flex align-items-center">
+							<!-- Partie gauche : icône de profil et numéro -->
+							<div class="d-flex align-items-center" style="flex: 1;">
+								<i class="fas fa-user-circle fa-2x text-secondary me-2"></i>
+								<span class="fw-bold">{{deffenseur.shirtNumber}}</span>
+							</div>
+							<!-- Partie centrale : nom du joueur -->
+							<div class="text-center" style="flex: 2;">
+								<h6 class="mb-0">{{deffenseur.name}}</h6>
+							</div>
+							<!-- Partie droite : drapeau du pays -->
+							<div class="text-end" style="flex: 1;">
+								<img src="{{ asset('uploads/logos/' ~ deffenseur.team.logo) }}" alt="CAN 2025" style="width: 24px; height: 24px;">
+							</div>
+						</div>
+					</div>
+
+				{% else %}
+					<div class="alert alert-danger w-100 text-center">
+						Pas de déffenseurs!</div>
+				{% endfor %}
+			</div>
+
+			<!-- La phase des milieux de terrain -->
+			<h4 class="mt-4 mx-4 " style="color : #006239">MILIEU DE TERRAIN</h4>
+			<div class="d-flex flex-wrap justify-content-start">
+				{% for milieu in milieux %}
+					<!-- Card du déffenseur -->
+					<div class="card m-2 p-2" style="width: 18rem;">
+						<div
+							class="d-flex align-items-center">
+							<!-- Partie gauche : icône de profil et numéro -->
+							<div class="d-flex align-items-center" style="flex: 1;">
+								<i class="fas fa-user-circle fa-2x text-secondary me-2"></i>
+								<span class="fw-bold">{{milieu.shirtNumber}}</span>
+							</div>
+							<!-- Partie centrale : nom du joueur -->
+							<div class="text-center" style="flex: 2;">
+								<h6 class="mb-0">{{milieu.name}}</h6>
+							</div>
+							<!-- Partie droite : drapeau du pays -->
+							<div class="text-end" style="flex: 1;">
+								<img src="{{ asset('uploads/logos/' ~ milieu.team.logo) }}" alt="CAN 2025" style="width: 24px; height: 24px;">
+							</div>
+						</div>
+					</div>
+
+				{% else %}
+					<div class="alert alert-danger w-100 text-center">
+						Pas de miluex!</div>
+				{% endfor %}
+			</div>
+
+			<!-- La phase des attaquants -->
+			<h4 class="mt-4 mx-4" style="color : #006239">ATTAQUANTS</h4>
+			<div class="d-flex flex-wrap justify-content-start">
+				{% for attaquant in attaquants %}
+					<!-- Card du déffenseur -->
+					<div class="card m-2 p-2" style="width: 18rem;">
+						<div
+							class="d-flex align-items-center">
+							<!-- Partie gauche : icône de profil et numéro -->
+							<div class="d-flex align-items-center" style="flex: 1;">
+								<i class="fas fa-user-circle fa-2x text-secondary me-2"></i>
+								<span class="fw-bold">{{attaquant.shirtNumber}}</span>
+							</div>
+							<!-- Partie centrale : nom du joueur -->
+							<div class="text-center" style="flex: 2;">
+								<h6 class="mb-0">{{attaquant.name}}</h6>
+							</div>
+							<!-- Partie droite : drapeau du pays -->
+							<div class="text-end" style="flex: 1;">
+								<img src="{{ asset('uploads/logos/' ~ attaquant.team.logo) }}" alt="CAN 2025" style="width: 24px; height: 24px;">
+							</div>
+						</div>
+					</div>
+
+				{% else %}
+					<div class="alert alert-danger w-100 text-center">
+						Pas de attaquants!</div>
+				{% endfor %}
+			</div>
+
+		</div>
+
+	</div>
+{% endblock %}

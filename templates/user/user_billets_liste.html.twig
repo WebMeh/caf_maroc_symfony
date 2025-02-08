@@ -61,6 +61,9 @@
 									<a href="{{ path('billet_download', { 'id': billet.id }) }}" class="btn btn-outline-primary btn-sm ms-2">
 										🖨️ Télécharger
 									</a>
+								{% elseif billet.statut == 'passé' %}
+									<span class="badge bg-success">✅ Matche terminé</span>
+									
 								{% else %}
 									<span class="badge bg-danger">❌ Refusé</span>
 								{% endif %}

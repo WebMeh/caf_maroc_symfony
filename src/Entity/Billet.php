@@ -26,7 +26,10 @@ class Billet
     private ?float $prix = null;
 
     #[ORM\Column(length: 20)]
-    private ?string $statut = 'en_attente'; // Valeurs possibles : 'en_attente', 'approuvé', 'refusé'
+    private ?string $statut = 'en_attente';
+
+    #[ORM\Column(length: 255, nullable:true)]
+    private ?string $trackingNumber = null; 
     
     public function getId(): ?int
     {
@@ -89,6 +92,18 @@ class Billet
     public function setStatut(string $statut): static
     {
         $this->statut = $statut;
+
+        return $this;
+    }
+
+    public function getTrackingNumber(): ?string
+    {
+        return $this->trackingNumber;
+    }
+
+    public function setTrackingNumber(string $trackingNumber): static
+    {
+        $this->trackingNumber = $trackingNumber;
 
         return $this;
     }

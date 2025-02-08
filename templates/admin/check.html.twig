@@ -1,0 +1,26 @@
+{% extends 'admin/admin_base.html.twig' %}
+
+{% block title %}
+	Vérification des billets
+{% endblock %}
+
+{% block content %}
+	<div class="container mt-5 border p-4">
+		<div class="d-flex justify-content-center">
+			<img src="{{ asset('images/caf-logo.png') }}" alt="CAF 2025" style="height: 80px;">
+
+		</div>
+		<h1 class="text-center" style="color: #006239">Vérification du Billet</h1>
+		<form method="GET" action="{{ path('security_check_billet') }}" class="text-center">
+			<input type="text" name="trackingNumber" placeholder="Entrez le numéro de suivi" class="p-3 form-control w-50 mx-auto">
+			<button type="submit" class="btn btn-primary mt-2">Vérifier</button>
+		</form>
+
+		{% if message is defined %}
+			<div class="alert alert-{{ status }} mt-3 text-center">
+				{{ message }}
+			</div>
+		{% endif %}
+	</div>
+
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'admin/admin_base.html.twig' %}
+
+{% block title %}
+	Acheteurs billet
+{% endblock %}
+
+{% block content %}
+	<div class="container mt-4">
+		<div
+			class="card w-50 " style="margin: auto">
+			{# <div class="card-head"></div> #}
+			<div class="card-body ">
+				<div class="d-flex justify-content-between">
+					<img src="{{ asset('uploads/logos/' ~ (match.team1.logo ?: 'can_logo.png')) }}" alt="{{ match.team1.name }}" width="50">
+					<img src="{{ asset('images/vs.jpg')}}" width="50">
+					<img src="{{ asset('uploads/logos/' ~ (match.team2.logo ?: 'can_logo.png')) }}" alt="{{ match.team1.name }}" width="50">
+				</div>
+				<div class="d-flex justify-content-between">
+					<strong>{{ match.team1.name }}</strong>
+					<i>{{ match.date|date('d/m/Y H:i') }}</i>
+					<strong>{{ match.team2.name }}</strong>
+				</div>
+			</div>
+			<div class="card-footer d-flex justify-content-between">
+				<p class="text-center">
+					<strong>
+						<i class="fa-solid fa-city mx-2"></i>
+					</strong>
+					{{ match.stade.nom ?? "N/A" }}
+				</p>
+				<p>
+					<i class="fa-solid fa-location-dot mx-2"></i>
+					{{ match.stade.ville ?? "N/A" }}
+				</p>
+			</div>
+		</div>
+		<div class="card mt-3">
+			<div class="card-header bg-dark text-white">
+				<div>
+					🎟️ Liste des acheteurs du billet
+				</div>
+			</div>
+			<div class="card-body">
+            {% if billets is empty %}
+			<p class="text-danger">Aucun billet vendu pour ce match.</p>
+		{% else %}
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Nom</th>
+						<th>Email</th>
+						<th>Numéro du billet</th>
+						<th>Statut</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for billet in billets %}
+						<tr>
+							<td>{{ billet.acheteur.nom }}
+								{{ billet.acheteur.prenom }}</td>
+							<td>{{ billet.acheteur.email }}</td>
+							<td>{{ billet.trackingNumber }}</td>
+							<td>
+								<span class="badge bg-success">Approuvé</span>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% endif %}
+            </div>
+		</div>
+	</div>
+{% endblock %}

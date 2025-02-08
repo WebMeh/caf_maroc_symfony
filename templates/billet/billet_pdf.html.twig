@@ -16,7 +16,7 @@
 				padding: 20px;
 				text-align: center;
 				font-family: sans-serif;
-                margin: auto;
+				margin: auto;
 
 			}
 
@@ -83,7 +83,7 @@
 		<div class="ticket">
 			<div class="header">
 				<h1>CAN Maroc - 2025</h1>
-				<h2>Finale</h2>
+				<h2>{{billet.matche.phase}}</h2>
 			</div>
 			<hr>
 			<div class="content">
@@ -126,6 +126,8 @@
 						{{ billet.matche.date|date("H:i") }}</p>
 				</div>
 			</div>
+			<h4 style="background-color: #165a24; color: white; padding: 4">Numéro de suivi: <i>{{billet.trackingNumber}}</i></h4>
+
 			<div class="footer">
 				<p>Merci d'assister à ce match. Nous espérons que vous passerez un moment inoubliable !</p>
 			</div>

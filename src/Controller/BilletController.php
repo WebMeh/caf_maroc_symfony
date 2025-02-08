@@ -48,10 +48,14 @@ final class BilletController extends AbstractController
     #[Route('/admin/billet/{id}/approuver', name: 'admin_billet_approuver')]
     public function approuverBillet(Billet $billet, EntityManagerInterface $entityManager): Response
     {
+        // Générer un tracking number unique
+        $trackingNumber = strtoupper(bin2hex(random_bytes(5))); // Ex: "A7F9D3B21E"
+        $billet->setTrackingNumber($trackingNumber);
         $billet->setStatut('approuvé');
         $entityManager->flush();
 
-        $this->addFlash('success', 'Le billet a été approuvé.');
+        $this->addFlash('success', "Billet approuvé avec le numéro de suivi : $trackingNumber");
+
         return $this->redirectToRoute('admin_billets_en_attente');
     }
 

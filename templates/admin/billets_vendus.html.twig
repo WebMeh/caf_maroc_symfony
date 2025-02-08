@@ -36,7 +36,7 @@
 								<span class="badge bg-success">{{ match.billets_vendus }}</span>
 							</td>
 							<td class="text-center">
-								<a href="#" class="btn btn-primary btn-sm">
+								<a href="{{ path('match_acheteurs', {'id': match.match_id}) }}" class="btn btn-primary btn-sm">
 									🏷️ Voir les acheteurs
 								</a>
 							</td>

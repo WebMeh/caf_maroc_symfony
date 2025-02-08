@@ -9,12 +9,16 @@ use App\Repository\MatcheRepository;
 use App\Repository\PlayerRepository;
 use App\Repository\TeamRepository;
 use DeepCopy\Matcher\Matcher;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/admin')]
+#[IsGranted("ROLE_ADMIN")]
+
 final class AdminController extends AbstractController
 {
     #[Route('/', name: 'admin_index')]
@@ -64,8 +68,9 @@ final class AdminController extends AbstractController
         ]);
     }
 
-    // Route pour afficher la liste des joueurs d'une équipe
+    // Route pour afficher la liste des joueurs d'une équipe coté admin
     #[Route('/teams/{teamId}/players', name: 'admin_players_list')]
+    #[IsGranted("ROLE_ADMIN")]
     public function playersList(int $teamId, TeamRepository $teamRepository, PlayerRepository $playerRepository): Response
     {
         // Récupérer l'équipe par son ID
@@ -86,7 +91,10 @@ final class AdminController extends AbstractController
         ]);
     }
 
+
+    // liste des matches coté admin
     #[Route('/matches', name: 'admin_matches_list')]
+    #[IsGranted("ROLE_ADMIN")]
     public function list(MatcheRepository $matcheRepository, Request $request)
     {
         $page = max(1, $request->query->getInt('page', 1)); // Récupérer la page actuelle (par défaut 1)
@@ -161,6 +169,67 @@ final class AdminController extends AbstractController
 
         return $this->render('admin/classement.html.twig', [
             'teams' => $teams
+        ]);
+    }
+
+    // Check billet
+    #[Route('/security/check-billet', name: 'security_check_billet')]
+    #[IsGranted("ROLE_ADMIN")]
+    public function checkBillet(Request $request, BilletRepository $billetRepository, EntityManagerInterface $entityManager): Response
+    {
+        $trackingNumber = $request->query->get('trackingNumber');
+
+        if (!$trackingNumber) {
+            return $this->render('admin/check.html.twig', [
+                'message' => "Entrez un numéro de suivi.",
+                'status' => 'warning'
+            ]);
+        }
+
+        $billet = $billetRepository->findOneBy(['trackingNumber' => $trackingNumber]);
+
+        if (!$billet) {
+            return $this->render('admin/check.html.twig', [
+                'message' => "Billet invalide.",
+                'status' => 'danger'
+            ]);
+        }
+
+        if ($billet->getStatut() === 'passé') {
+            return $this->render('admin/check.html.twig', [
+                'message' => "Ce billet a déjà été utilisé.",
+                'status' => 'danger'
+            ]);
+        }
+
+        // Marquer le billet comme "passé"
+        $billet->setStatut('passé');
+        $entityManager->persist($billet);
+        $entityManager->flush();
+
+        return $this->render('admin/check.html.twig', [
+            'message' => "Billet valide ! Accès autorisé.",
+            'status' => 'success'
+        ]);
+    }
+
+
+    //  Voir les acheteurs d'un billet d'un matche
+    #[Route('/match/{id}/acheteurs', name: 'match_acheteurs')]
+    public function voirAcheteurs(int $id, MatcheRepository $matchRepository, BilletRepository $billetRepository): Response
+    {
+        $match = $matchRepository->find($id);
+
+        if (!$match) {
+            throw $this->createNotFoundException("Match non trouvé.");
+        }
+
+        // Récupérer les billets vendus pour ce match
+        $billets = $billetRepository->findBy(['matche' => $match, 'statut' => 'approuvé']);
+
+        return $this->render('matchE/acheteurs.html.twig', [
+            'match' => $match,
+            'billets' => $billets
         ]);
     }
 }
