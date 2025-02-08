@@ -61,6 +61,9 @@ class Team
     #[ORM\Column(nullable: true)]
     private ?int $goalDifference = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $logo = null;
+
     public function __construct()
     {
         $this->players = new ArrayCollection();
@@ -233,6 +236,18 @@ class Team
     public function setGoalDifference(?int $goalDifference): static
     {
         $this->goalDifference = $goalDifference;
+
+        return $this;
+    }
+
+    public function getLogo(): ?string
+    {
+        return $this->logo;
+    }
+
+    public function setLogo(?string $logo): static
+    {
+        $this->logo = $logo;
 
         return $this;
     }

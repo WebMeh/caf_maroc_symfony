@@ -1,4 +1,4 @@
-<html>
+{# <html>
 	<head>
 		<title>Matche User</title>
 	</head>
@@ -6,4 +6,70 @@
 		Bienvenue dans le matche 
         {{ include('billet/reserver.html.twig') }}
 	</body>
-</html>
+</html> #}
+
+{% extends 'base.html.twig' %}
+{% block title %}
+	Prendre Ticket
+{% endblock %}
+
+{% block body %}
+	<div class="container my-5">
+		<div
+			class="row">
+			<!-- Partie gauche : Détails du match -->
+			<div class="col-md-7">
+				<div
+					class="card shadow-lg p-4">
+					<!-- Logos des équipes -->
+					<div class="d-flex justify-content-center align-items-center">
+						<div class="text-center me-4">
+							<img src="{{ asset('uploads/logos/' ~ matche.team1.logo ?: 'can_logo.png') }}" alt="{{ matche.team1.name }}" style="width: 80px; height: 80px; object-fit: contain;" class="team-logo">
+							<p class="fw-bold mt-2">{{ matche.team1.name }}</p>
+						</div>
+						<h2 class="fw-bold text-danger">VS</h2>
+						<div class="text-center ms-4">
+							<img src="{{ asset('uploads/logos/' ~ matche.team2.logo ?: 'can_logo.png') }}" alt="{{ matche.team2.name }}" style="width: 80px; height: 80px; object-fit: contain;" class="team-logo">
+							<p class="fw-bold mt-2">{{ matche.team2.name }}</p>
+						</div>
+					</div>
+					<hr>
+					<p>
+						<i class="fas fa-calendar-alt text-success"></i>
+						<strong>Date :</strong>
+						{{ matche.date|date('d M Y') }} ,
+						<span style="color: #167224; font-weight: bold; font-size: 1.1rem">{{ matche.date|date('H:i') }}</span>
+							<i>(GMT + 1)</i>
+						</p>
+					<p>
+						<i class="fas fa-map-marker-alt text-danger"></i>
+						<strong>Stade :</strong>
+						{{ matche.stade.nom ?? '<i class="fas fa-exclamation-circle text-warning"></i> Non défini'|raw }}</p>
+					<p>
+						<i class="fas fa-city text-info"></i>
+						<strong>Ville :</strong>
+						{{ matche.stade.ville ?? 'N/A' }}</p>
+
+				</div>
+			</div>
+
+			<!-- Partie droite : Prix & réservation -->
+			<div class="col-md-5">
+				<div class="card shadow-lg text-center p-4">
+					<h4 class="fw-bold">
+						<i class="fas fa-ticket-alt text-warning"></i>
+						Prix du billet</h4>
+					<h2 class=" fw-bold my-3" style="color: #006239">
+						{{ matche.prixBillet }}
+						DH
+					</h2>
+					<a href="{{path('billet_reserver', {id: matche.id})}}" class="btn btn-lg  fw-bold" style="background-color: #006239; color: white">
+						<i class="fas fa-shopping-cart"></i>
+						Réserver maintenant
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

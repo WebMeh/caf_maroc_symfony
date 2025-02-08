@@ -8,10 +8,15 @@ use App\Form\BilletType;
 use App\Repository\BilletRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Writer\PngWriter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/billet')]
 final class BilletController extends AbstractController
@@ -62,6 +67,7 @@ final class BilletController extends AbstractController
     }
 
     // Réserver un billet pour un match connu par son id
+    #[IsGranted('ROLE_USER')]
     #[Route("/matche/{id}/reserver", name: 'billet_reserver', methods: ['POST', 'GET'])]
     public function reserver(Request $request, Matche $matche, EntityManagerInterface $entityManager)
     {
@@ -83,9 +89,73 @@ final class BilletController extends AbstractController
         $entityManager->persist($billet);
         $entityManager->flush();
 
-        // Retour à la page du match
+        // Rediriger besr liste des billets de user
         $this->addFlash('success', 'Votre réservation a été enregistrée, en attente de validation par l\'admin.');
-        return $this->redirectToRoute('app_matche_show', ['id' => $matche->getId()]);
+        return $this->redirectToRoute('user_billets_liste');
+    }
+
+
+    // Mes billets (User tickets)
+    #[Route('/mes-billets', name: 'user_billets_liste')]
+    #[IsGranted('ROLE_USER')]
+    public function userBilletsListe(EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser(); // Récupérer l'utilisateur connecté
+
+        // Récupérer les billets de l'utilisateur
+        $billets = $entityManager->getRepository(Billet::class)->findBy(['acheteur' => $user]);
+
+        return $this->render('user/user_billets_liste.html.twig', [
+            'billets' => $billets,
+        ]);
+    }
+
+    // télécharger ke billet
+    #[Route('/{id}/download', name: 'billet_download')]
+    public function downloadBillet(int $id, BilletRepository $billetRepository): Response
+    {
+        $billet = $billetRepository->find($id);
+
+        if (!$billet || $billet->getStatut() !== 'approuvé') {
+            throw $this->createNotFoundException("Billet non trouvé ou non approuvé.");
+        }
+
+        // Récupérer l'acheteur
+        $acheteur = $billet->getAcheteur();
+
+        // Options pour DOMPDF
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+
+        // Initialiser Dompdf
+        $dompdf = new Dompdf($pdfOptions);
+
+
+        // HTML du billet
+        $html = $this->renderView('billet/billet_pdf.html.twig', [
+            'billet' => $billet,
+            'acheteur' => $acheteur
+        ]);
+
+
+
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+        // Générer le fichier PDF directement en mémoire
+        $pdfContent = $dompdf->output();
+
+        // Créer la réponse pour le téléchargement du fichier
+        $response = new Response($pdfContent);
+        $response->headers->set('Content-Type', 'application/pdf');
+        $response->headers->set('Content-Disposition', 'attachment; filename="Billet_' . $billet->getId() . '.pdf"');
+        $response->headers->set('Cache-Control', 'no-cache, no-store, must-revalidate');
+        $response->headers->set('Pragma', 'no-cache');
+        $response->headers->set('Expires', '0');
+
+        return $response;
     }
 
     #[Route(name: 'app_billet_index', methods: ['GET'])]

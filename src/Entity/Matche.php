@@ -25,10 +25,10 @@ class Matche
     private ?Team $team2 = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $score1 = 0;
+    private ?int $score1 = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $score2 = 0;
+    private ?int $score2 = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date = null;

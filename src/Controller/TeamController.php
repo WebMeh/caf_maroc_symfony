@@ -7,9 +7,11 @@ use App\Form\TeamType;
 use App\Repository\TeamRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/team')]
 final class TeamController extends AbstractController
@@ -23,13 +25,34 @@ final class TeamController extends AbstractController
     }
 
     #[Route('/new', name: 'admin_team_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
+    public function new(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        SluggerInterface $slugger
+    ): Response {
         $team = new Team();
         $form = $this->createForm(TeamType::class, $team);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $logoFile = $form->get('logo')->getData();
+
+            if ($logoFile) {
+                $originalFilename = pathinfo($logoFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $logoFile->guessExtension();
+
+                try {
+                    $logoFile->move(
+                        $this->getParameter('logos_directory'),
+                        $newFilename
+                    );
+                    $team->setLogo($newFilename);
+                } catch (FileException $e) {
+                    $this->addFlash('danger', 'Erreur lors de l\'upload du fichier.');
+                }
+            }
+
             $entityManager->persist($team);
             $entityManager->flush();
 
@@ -56,7 +79,29 @@ final class TeamController extends AbstractController
         $form = $this->createForm(TeamType::class, $team);
         $form->handleRequest($request);
 
+        // Vérifie si le formulaire a été soumis et est valide
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // Récupérer le fichier téléchargé pour le logo
+            $logoFile = $form->get('logo')->getData();
+
+            if ($logoFile) {
+                // Générez un nom unique pour le fichier
+                $newFilename = uniqid() . '.' . $logoFile->guessExtension();
+
+                // Déplace le fichier dans le dossier de stockage
+                try {
+                    $logoFile->move(
+                        $this->getParameter('logos_directory'), // Le répertoire où stocker les logos
+                        $newFilename
+                    );
+                    $team->setLogo($newFilename); // Mettre à jour le champ logo de l'équipe
+                } catch (FileException $e) {
+                    $this->addFlash('error', 'Erreur lors de l\'upload du logo.');
+                }
+            }
+
+            // Sauvegarde des modifications de l'équipe
             $entityManager->flush();
 
             return $this->redirectToRoute('admin_teams', [], Response::HTTP_SEE_OTHER);
@@ -64,7 +109,7 @@ final class TeamController extends AbstractController
 
         return $this->render('team/edit.html.twig', [
             'team' => $team,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 

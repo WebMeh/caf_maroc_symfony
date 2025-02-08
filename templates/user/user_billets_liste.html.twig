@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}🎟️ Mes Billets
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h2 class="fw-bold text-center mt-2">
+			<span class="badge  fs-4 px-3 py-2" style="background-color: #006239">
+				🎟️ Mes Billets
+			</span>
+		</h2>
+
+		{% if billets is empty %}
+			<div class="alert alert-info text-center">Vous n'avez encore réservé aucun billet.</div>
+		{% else %}
+			<table class="table table-hover shadow-sm text-center">
+				<thead class="table-dark">
+					<tr>
+						<td class="bg-light ">
+							<img src="{{ asset('images/caf-logo.png') }}" alt="CAF 2025" style="height: 50px;">
+
+						</td>
+					</tr>
+					<tr>
+						<th style="background-color: #006239; color: white">Match</th>
+						<th style="background-color: #006239; color: white">Date & Heure</th>
+						<th style="background-color: #006239; color: white">Stade</th>
+						<th style="background-color: #006239; color: white">Prix</th>
+						<th style="background-color: #006239; color: white">Statut</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for billet in billets %}
+						<tr>
+							<td>
+								<strong>{{ billet.matche.team1.name }}</strong>
+								🆚
+								<strong>{{ billet.matche.team2.name }}</strong>
+							</td>
+							<td>
+								📅
+								{{ billet.matche.date|date('d M Y') }}
+								à
+								{{ billet.matche.date|date('H:i') }}
+							</td>
+							<td>
+								🏟️
+								{{ billet.matche.stade.nom|default('Non défini') }}
+							</td>
+							<td>
+								💰
+								{{ billet.prix }}
+								DH
+							</td>
+							<td>
+								{% if billet.statut == 'en_attente' %}
+									<span class="badge bg-warning text-dark">⏳ En attente</span>
+								{% elseif billet.statut == 'approuvé' %}
+									<span class="badge bg-success">✅ Approuvé</span>
+									<a href="{{ path('billet_download', { 'id': billet.id }) }}" class="btn btn-outline-primary btn-sm ms-2">
+										🖨️ Télécharger
+									</a>
+								{% else %}
+									<span class="badge bg-danger">❌ Refusé</span>
+								{% endif %}
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% endif %}
+	</div>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tous les Matchs
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-5">
+		<h2 class="fw-bold text-center my-4">
+			<span class="badge  fs-4 px-3 py-2" style="background-color: #006239">
+				<i class="fas fa-futbol me-2"></i>
+				Tous les matches CAN 2025
+			</span>
+		</h2>
+
+		<table class="table table-hover table-striped text-center">
+			<thead class="table-dark">
+				<tr>
+					<th style="background-color: #006239; color: white">Date</th>
+					<th style="background-color: #006239; color: white">Équipe Domicile</th>
+					<th style="background-color: #006239; color: white">Score</th>
+					<th style="background-color: #006239; color: white">Équipe Extérieure</th>
+					<th style="background-color: #006239; color: white">Stade</th>
+					<th style="background-color: #006239; color: white">Ville</th>
+					<th style="background-color: #006239; color: white">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for match in matches %}
+					<tr>
+						<!-- Date et Heure -->
+						<td>
+							<strong>{{ match.date|date('d M Y') }}</strong><br>
+							<small class="text-muted">{{ match.date|date('H:i') }}</small>
+						</td>
+
+						<!-- Équipe 1 -->
+						<td class="text-end">
+							<img src="{{ asset('uploads/logos/' ~ (match.team1.logo ?: 'can_logo.png')) }}" alt="{{ match.team1.name }}" width="30">
+							<strong>{{ match.team1.name }}</strong>
+						</td>
+
+						<!-- Score -->
+						<td>
+							{% if match.score1 is not null and match.score2 is not null %}
+								<span class="fs-5">
+									<strong>{{ match.score1 }}
+										-
+										{{ match.score2 }}</strong>
+								</span>
+							{% else %}
+								<span class="badge bg-warning text-dark">À venir</span>
+							{% endif %}
+						</td>
+
+						<!-- Équipe 2 -->
+						<td class="text-start">
+							<img src="{{ asset('uploads/logos/' ~ (match.team2.logo ?: 'can_logo.png')) }}" alt="{{ match.team2.name }}" width="30">
+							<strong>{{ match.team2.name }}</strong>
+						</td>
+
+						<!-- Stade et Ville -->
+						<td>
+							<i class="fas fa-stadium"></i>
+							{{ match.stade ? match.stade.nom : '🏟️ Non défini' }}</td>
+						<td>
+							<i class="fas fa-map-marker-alt"></i>
+							{{ match.stade ? match.stade.ville: 'Non défini' }}</td>
+
+						<!-- Action : Voir / Réserver -->
+						<td>
+							{% if match.score1 is null and match.score2 is null %}
+								<a href="{{ path('user_show_match', {'id': match.id}) }}" class="btn btn-success btn-sm">
+									🎟 Réserver
+								</a>
+							{% else %}
+								<a href="#" class="btn btn-primary btn-sm">
+									📊 Détails
+								</a>
+							{% endif %}
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="7" class="text-center text-muted">Aucun match programmé.</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}

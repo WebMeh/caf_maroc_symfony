@@ -56,14 +56,12 @@ class MatcheType extends AbstractType
         ->add('score1', IntegerType::class, [
             'label' => 'Score Équipe 1',
             'required' => false,
-            'attr' => ['class' => 'form-control', 'min' => 0], 
-            'data' => 0, // Valeur par défaut
+            'attr' => ['class' => 'form-control', 'min' => 0]
         ])
         ->add('score2', IntegerType::class, [
             'label' => 'Score Équipe 2',
             'required' => false,
-            'attr' => ['class' => 'form-control', 'min' => 0], 
-            'data' => 0, // Valeur par défaut
+            'attr' => ['class' => 'form-control', 'min' => 0]
         ])
         ->add('prixBillet'); 
     }

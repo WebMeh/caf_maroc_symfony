@@ -1,0 +1,24 @@
+<div class="container mt-5">
+    <h2 class="text-center mb-4">🔥 Moments forts des derniers matchs</h2>
+
+    <div class="row">
+        {% for match in derniersMatchs %}
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-dark text-white text-center">
+                        <strong>{{ match.team1.nom }} ⚔️ {{ match.team2.nom }}</strong>
+                    </div>
+                    <div class="card-body text-center">
+                        <p>Score final : <strong>{{ match.score1 }} - {{ match.score2 }}</strong></p>
+                        <p><i class="fas fa-calendar-alt"></i> {{ match.date|date('d M Y') }}</p>
+                        <a href="{{ path('app_match_details', {'id': match.id}) }}" class="btn btn-outline-dark btn-sm">
+                            Voir les détails
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p class="text-center text-muted">Aucun match récent disponible.</p>
+        {% endfor %}
+    </div>
+</div>

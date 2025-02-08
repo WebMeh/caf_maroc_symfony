@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\MatcheRepository;
+use App\Repository\TeamRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -10,11 +11,19 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/user')]
 final class UserController extends AbstractController
 {
-    #[Route('/user', name: 'app_user')]
+    #[Route('/', name: 'app_user')]
     public function index(): Response
     {
         return $this->render('user/index.html.twig', [
             'controller_name' => 'UserController',
+        ]);
+    }
+    // Les équipes partie user
+    #[Route('/teams', name: 'user_show_teams')]
+    public function showTeams(TeamRepository $teamRepository): Response
+    {
+        return $this->render('user/equipes.html.twig', [
+            'equipes' => $teamRepository->findAll()
         ]);
     }
 

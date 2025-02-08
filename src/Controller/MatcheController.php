@@ -22,6 +22,17 @@ final class MatcheController extends AbstractController
         ]);
     }
 
+    // ALl matches
+    #[Route('/all', name: 'all_matches')]
+    public function getAll(MatcheRepository $matcheRepository): Response
+    {
+        $matches = $matcheRepository->findBy([], ['date' => 'ASC']);
+
+        return $this->render('matche/all_matches.html.twig', [
+            'matches' => $matches,
+        ]);
+    }
+
     #[Route('/new', name: 'admin_match_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -71,7 +82,7 @@ final class MatcheController extends AbstractController
     #[Route('/{id}', name: 'admin_match_delete', methods: ['POST'])]
     public function delete(Request $request, Matche $matche, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$matche->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $matche->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($matche);
             $entityManager->flush();
         }

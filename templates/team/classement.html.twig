@@ -1,0 +1,43 @@
+<div class="container mt-5">
+<hr class="fs-6">
+<h2 class="fw-bold text-center my-4">
+			<span class="badge  fs-4 px-3 py-2" style="background-color: #006239">
+				🏆 Classement Actuel
+			</span>
+		</h2>	<div class="table-responsive">
+		<table class="table table-striped text-center">
+			<thead class="" >
+				<tr style="background-color: #006239;">
+					<th style="background-color: #006239; color: white">Position</th>
+					<th style="background-color: #006239; color: white">Équipe</th>
+					<th style="background-color: #006239; color: white">Pts</th>
+					<th style="background-color: #006239; color: white">J</th>
+					<th style="background-color: #006239; color: white">V</th>
+					<th style="background-color: #006239; color: white">N</th>
+					<th style="background-color: #006239; color: white">D</th>
+					<th style="background-color: #006239; color: white">BP</th>
+					<th style="background-color: #006239; color: white">BC</th>
+					<th style="background-color: #006239; color: white">Diff</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for team in teams %}
+					<tr>
+						<td>{{ loop.index }}</td>
+						<td>{{ team.name }}</td>
+						<td>
+							<strong>{{ team.points }}</strong>
+						</td>
+						<td>{{ team.matchesPlayed }}</td>
+						<td>{{ team.wins }}</td>
+						<td>{{ team.draws }}</td>
+						<td>{{ team.losses }}</td>
+						<td>{{ team.goalsFor }}</td>
+						<td>{{ team.goalsAgainst }}</td>
+						<td>{{ team.goalsFor - team.goalsAgainst }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
