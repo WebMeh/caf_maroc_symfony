@@ -17,7 +17,7 @@ final class HomeController extends AbstractController
         TeamRepository $teamRepository,
         BilletRepository $billetRepository
     ): Response {
-        // 1️⃣ Récupérer les 3 prochains matchs les plus proches
+        // 1 Récupérer les 3 prochains matchs les plus proches
         $prochainsMatchs = $matcheRepository->createQueryBuilder('m')
             ->where('m.date > :today')
             ->setParameter('today', new \DateTime())

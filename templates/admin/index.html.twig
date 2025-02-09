@@ -10,7 +10,8 @@
 		<div class="row"> <div class="col-md-3">
 			<div class="card text-white bg-primary mb-3">
 				<div class="card-body">
-					<h5 class="card-title">{{ teams|length }} Équipes</h5>
+					<h5 class="card-title">{{ teams|length }}
+						Équipes</h5>
 					<p class="card-text">Nombre total d'équipes inscrites</p>
 				</div>
 			</div>
@@ -18,7 +19,8 @@
 		<div class="col-md-3">
 			<div class="card text-white bg-success mb-3">
 				<div class="card-body">
-					<h5 class="card-title">{{ matches|length }} Matchs</h5>
+					<h5 class="card-title">{{ matches|length }}
+						Matchs</h5>
 					<p class="card-text">Nombre total de matchs programmés</p>
 				</div>
 			</div>
@@ -26,15 +28,18 @@
 		<div class="col-md-3">
 			<div class="card text-white bg-warning mb-3">
 				<div class="card-body">
-					<h5 class="card-title">+ <strong>{{ billets }}</strong> Billets vendus dès le début 
-					de la compétition</h5>
+					<h5 class="card-title">+
+						<strong>{{ billets }}</strong>
+						Billets vendus dès le début 
+																													de la compétition</h5>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-3">
 			<div class="card text-white bg-danger mb-3">
 				<div class="card-body">
-					<h5 class="card-title">15 Stades</h5>
+					<h5 class="card-title">{{ stades|length }}
+						Stades</h5>
 					<p class="card-text">Lieux des matchs de la compétition</p>
 				</div>
 			</div>
@@ -58,27 +63,29 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>10 Février 2025</td>
-						<td>Maroc 🇲🇦</td>
-						<td>Sénégal 🇸🇳</td>
-						<td>Stade de Rabat</td>
-						<td>18:00</td>
-					</tr>
-					<tr>
-						<td>11 Février 2025</td>
-						<td>Algérie 🇩🇿</td>
-						<td>Nigeria 🇳🇬</td>
-						<td>Stade de Casablanca</td>
-						<td>20:30</td>
-					</tr>
-					<tr>
-						<td>12 Février 2025</td>
-						<td>Égypte 🇪🇬</td>
-						<td>Cameroun 🇨🇲</td>
-						<td>Stade de Marrakech</td>
-						<td>19:00</td>
-					</tr>
+					{% for match in prochainsMatchs %}
+						<tr>
+							<td>
+								<span>
+									<b>{{ match.date|date('d M Y') }}</b>
+								</span>
+							</td>
+							<td>
+								<img src="{{ asset('uploads/logos/' ~ (match.team1.logo ?: 'can_logo.png')) }}" alt="caf image" class="img-fluid" style="height: 50px; object-fit: contain; margin-right: 10px;">
+							</td>
+							<td>
+								<img src="{{ asset('uploads/logos/' ~ (match.team2.logo ?: 'can_logo.png')) }}" alt="caf image" class="img-fluid" style="height: 50px; object-fit: contain; margin-right: 10px;">
+							</td>
+							<td>Stade de <strong>{{ match.stade.nom ?? "N/A" }} </strong> à <strong>{{ match.stade.ville ?? "N/A" }}</strong></td>
+							<td>{{ match.date|date('H:i') }}</td>
+						</tr>
+					{% else %}
+						<div class="alert alert danger">
+							<h2 class="text-center">
+								Aucun match est programmé !</h2>
+						</div>
+					{% endfor %}
+					
 				</tbody>
 			</table>
 		</div>

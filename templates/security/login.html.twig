@@ -27,7 +27,7 @@
 			width: 170px;
 			top: -75px;
 			border-radius: 50%;
-			background:rgba(5, 85, 35, 0.64);
+			/* background:rgba(5, 85, 35, 0.64); */
 			padding: 10px;
 			text-align: center;
 		}
@@ -42,7 +42,7 @@
 		}
 		.login_btn {
 			width: 100%;
-			background: #c0392b !important;
+			background: #006239 !important;
 			color: white !important;
 		}
 		.login_btn:focus {
@@ -53,7 +53,8 @@
 			padding: 0 2rem;
 		}
 		.input-group-text {
-			background: #c0392b !important;
+			background: #006239 !important;
+			height: 100%;
 			color: white !important;
 			border: 0 !important;
 			border-radius: 0.25rem 0 0 0.25rem !important;
@@ -70,42 +71,43 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container">
-		<form method="post">
-			{% if error %}
-				<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-			{% endif %}
+	<div
+		class="container">
+		{# <form method="post">
+							{% if error %}
+								<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+							{% endif %}
+				
+							{% if app.user %}
+								<div class="mb-3">
+									You are logged in as
+									{{ app.user.userIdentifier }},
+									<a href="{{ path('app_logout') }}">Logout</a>
+								</div>
+							{% endif %}
+				
+							<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+							<label for="inputEmail">Email</label>
+							<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+							<label for="inputPassword">Password</label>
+							<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+				
+							<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+				
+							<div class="checkbox mb-3">
+								<label>
+									<input type="checkbox" name="_remember_me">
+									Remember me
+								</label>
+							</div>
+				
+							<button class="btn btn-lg btn-primary" type="submit">
+								Sign in
+							</button>
+						</form> #}
 
-			{% if app.user %}
-				<div class="mb-3">
-					You are logged in as
-					{{ app.user.userIdentifier }},
-					<a href="{{ path('app_logout') }}">Logout</a>
-				</div>
-			{% endif %}
-
-			<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-			<label for="inputEmail">Email</label>
-			<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-			<label for="inputPassword">Password</label>
-			<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-
-			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-			<div class="checkbox mb-3">
-				<label>
-					<input type="checkbox" name="_remember_me">
-					Remember me
-				</label>
-			</div>
-
-			<button class="btn btn-lg btn-primary" type="submit">
-				Sign in
-			</button>
-		</form>
-
-
-		{# <div class="container h-100">
+		<div class="my-3 text-white my-3">vv</div>
+		<div class="container h-100">
 			<div class="d-flex justify-content-center h-100">
 				<div class="user_card">
 					<div class="d-flex justify-content-center">
@@ -114,14 +116,25 @@
 						</div>
 					</div>
 					<div class="d-flex justify-content-center form_container">
-						<form>
+						<form method="post">
+							{% if error %}
+								<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+							{% endif %}
+
+							{% if app.user %}
+								<div class="mb-3">
+									You are logged in as
+									{{ app.user.userIdentifier }},
+									<a href="{{ path('app_logout') }}">Logout</a>
+								</div>
+							{% endif %}
 							<div class="input-group mb-3">
 								<div class="input-group-append">
 									<span class="input-group-text">
 										<i class="fas fa-user"></i>
 									</span>
 								</div>
-								<input type="text" name="" class="form-control input_user" value="" placeholder="username">
+								<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
 							</div>
 							<div class="input-group mb-2">
 								<div class="input-group-append">
@@ -129,31 +142,24 @@
 										<i class="fas fa-key"></i>
 									</span>
 								</div>
-								<input type="password" name="" class="form-control input_pass" value="" placeholder="password">
+								<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 							</div>
-							<div class="form-group">
-								<div class="custom-control custom-checkbox">
-									<input type="checkbox" class="custom-control-input" id="customControlInline">
-									<label class="custom-control-label" for="customControlInline">Remember me</label>
-								</div>
-							</div>
+							<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 							<div class="d-flex justify-content-center mt-3 login_container">
-								<button type="button" name="button" class="btn login_btn">Login</button>
+								<button name="button" class="btn login_btn" type="submit">Se connecter</button>
 							</div>
 						</form>
 					</div>
 
 					<div class="mt-4">
 						<div class="d-flex justify-content-center links">
-							Don't have an account?
-							<a href="#" class="ml-2">Sign Up</a>
+							Vous n'avez pas du compt ?
+							<a href="{{path('app_register')}}" class="ml-2 mx-2">Créer le</a>
 						</div>
-						<div class="d-flex justify-content-center links">
-							<a href="#">Forgot your password?</a>
-						</div>
+						
 					</div>
 				</div>
 			</div>
-		</div> #}
+		</div>
 	</div>
 {% endblock %}

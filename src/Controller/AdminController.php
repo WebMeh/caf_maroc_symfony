@@ -7,6 +7,7 @@ use App\Form\TeamType;
 use App\Repository\BilletRepository;
 use App\Repository\MatcheRepository;
 use App\Repository\PlayerRepository;
+use App\Repository\StadeRepository;
 use App\Repository\TeamRepository;
 use DeepCopy\Matcher\Matcher;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,12 +26,24 @@ final class AdminController extends AbstractController
     public function index(
         TeamRepository $teamRepository,
         MatcheRepository $matcheRepository,
-        BilletRepository $billetRepository
+        BilletRepository $billetRepository, 
+        StadeRepository $stadeRepository
     ): Response {
+         // 1 Récupérer les 3 prochains matchs les plus proches
+         $prochainsMatchs = $matcheRepository->createQueryBuilder('m')
+         ->where('m.date > :today')
+         ->setParameter('today', new \DateTime())
+         ->orderBy('m.date', 'ASC')
+         ->setMaxResults(3)
+         ->getQuery()
+         ->getResult();
+
         return $this->render('admin/index.html.twig', [
             'teams' => $teamRepository->findAll(),
             'matches' => $matcheRepository->findAll(),
-            'billets' => $billetRepository->countBilletsVendus()
+            'prochainsMatchs' => $prochainsMatchs,
+            'billets' => $billetRepository->countBilletsVendus(),
+            'stades' => $stadeRepository->findAll()
         ]);
     }
 

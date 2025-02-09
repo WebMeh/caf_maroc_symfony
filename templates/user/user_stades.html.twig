@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	CAN 2025 - Les stades
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-5">
+		<h2 class="text-center mb-4">
+			<span class="badge bg-success p-3">🏟️ Liste des Stades</span>
+		</h2>
+
+		<div class="row">
+			{% for stade in stades %}
+				<div class="col-md-4 mb-4">
+					<div class="card border-0 shadow stadium-card text-white">
+						<div class="card-body text-center">
+							<h4 class="card-title">{{ stade.nom }}</h4>
+							<p class="card-text">
+								<i class="fas fa-map-marker-alt"></i>
+								{{ stade.ville }}</p>
+							<p class="card-text">
+								<i class="fas fa-users"></i>
+								Capacité :
+								{{ stade.capacite }}
+								spectateurs</p>
+							<button class="btn btn-light btn-sm mt-2">📍 Voir sur la carte</button>
+						</div>
+					</div>
+				</div>
+			{% else %}
+				<p class="text-center">Aucun stade disponible.</p>
+			{% endfor %}
+		</div>
+	</div>
+
+{% endblock %}

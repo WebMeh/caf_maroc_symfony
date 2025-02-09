@@ -1,13 +1,21 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/admin_base.html.twig' %}
 
-{% block title %}Edit Stade{% endblock %}
+{% block title %}Edit Stade
+{% endblock %}
 
-{% block body %}
-    <h1>Edit Stade</h1>
+{% block content %}
+	<div class="card">
+		<div class="card-header bg-dark text-white ">
+			<i class="fa-solid fa-landmark"></i>
+			Modifier le stade
+		</div>
+		<div class="card-body">
+			{{ include('stade/_form.html.twig', {'button_label': 'Update'}) }}
+		</div>
+	</div>
+	{# {{ include('stade/_form.html.twig', {'button_label': 'Update'}) }}
 
-    {{ include('stade/_form.html.twig', {'button_label': 'Update'}) }}
+	<a href="{{ path('app_stade_index') }}">back to list</a>
 
-    <a href="{{ path('app_stade_index') }}">back to list</a>
-
-    {{ include('stade/_delete_form.html.twig') }}
+	{{ include('stade/_delete_form.html.twig') }} #}
 {% endblock %}

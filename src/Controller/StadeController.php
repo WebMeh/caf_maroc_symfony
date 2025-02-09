@@ -49,6 +49,14 @@ final class StadeController extends AbstractController
             'stade' => $stade,
         ]);
     }
+    
+    #[Route('/all-stades', name: 'user_stades_index', methods: ['GET'])]
+    public function userStades(StadeRepository $stadeRepository): Response
+    {
+        return $this->render('user/user_stades.html.twig', [
+            'stades' => $stadeRepository->findAll()
+        ]);
+    }
 
     #[Route('/{id}/edit', name: 'app_stade_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Stade $stade, EntityManagerInterface $entityManager): Response
