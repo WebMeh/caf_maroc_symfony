@@ -22,6 +22,7 @@ final class StadeController extends AbstractController
         ]);
     }
 
+
     #[Route('/new', name: 'app_stade_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -47,14 +48,6 @@ final class StadeController extends AbstractController
     {
         return $this->render('stade/show.html.twig', [
             'stade' => $stade,
-        ]);
-    }
-    
-    #[Route('/all-stades', name: 'user_stades_index', methods: ['GET'])]
-    public function userStades(StadeRepository $stadeRepository): Response
-    {
-        return $this->render('user/user_stades.html.twig', [
-            'stades' => $stadeRepository->findAll()
         ]);
     }
 

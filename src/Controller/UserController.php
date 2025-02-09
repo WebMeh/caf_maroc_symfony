@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\ChangePasswordType;
 use App\Repository\MatcheRepository;
+use App\Repository\StadeRepository;
 use App\Repository\TeamRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -70,6 +71,14 @@ final class UserController extends AbstractController
 
         return $this->render('user/change_password.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/stades', name: 'user_stade_index', methods: ['GET'])]
+    public function getAllStades(StadeRepository $stadeRepository): Response
+    {
+        return $this->render('user/user_stades.html.twig', [
+            'stades' => $stadeRepository->findAll(),
         ]);
     }
 }
